@@ -1,0 +1,191 @@
+@import "tailwindcss";
+
+:root {
+  --background: #0b0b0c;
+  --surface: rgba(25, 26, 34, 0.5);
+  --foreground: #f4f6ff;
+  --muted: rgba(226, 232, 255, 0.66);
+  --accent-violet: #8b6aff;
+  --accent-cyan: #34e3ff;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: var(--font-manrope);
+  --font-display: var(--font-sora);
+}
+
+body {
+  position: relative;
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-manrope), "Segoe UI", sans-serif;
+  text-wrap: pretty;
+}
+
+h1,
+h2,
+h3,
+h4 {
+  font-family: var(--font-sora), "Segoe UI", sans-serif;
+  letter-spacing: -0.02em;
+}
+
+a,
+button {
+  transition: all 220ms ease;
+}
+
+.site-bg {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  background:
+    radial-gradient(circle at 8% 10%, rgba(139, 106, 255, 0.24), transparent 46%),
+    radial-gradient(circle at 86% 16%, rgba(52, 227, 255, 0.16), transparent 42%),
+    radial-gradient(circle at 45% 92%, rgba(147, 109, 255, 0.16), transparent 48%),
+    linear-gradient(150deg, #111224 0%, #0b0b0c 55%, #090910 100%);
+}
+
+.section-wrap {
+  margin-inline: auto;
+  width: 100%;
+  max-width: 80rem;
+  padding-inline: 1.25rem;
+}
+
+.eyebrow {
+  font-size: 0.68rem;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: rgba(192, 245, 255, 0.7);
+}
+
+.glass-panel {
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  background: linear-gradient(130deg, rgba(255, 255, 255, 0.12), rgba(255, 255, 255, 0.03));
+  backdrop-filter: blur(14px);
+}
+
+.button-primary {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55rem;
+  border-radius: 999px;
+  border: 1px solid rgba(130, 249, 255, 0.4);
+  background: linear-gradient(140deg, rgba(123, 88, 255, 0.95), rgba(54, 232, 255, 0.78));
+  padding: 0.7rem 1.4rem;
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: #f9fbff;
+  box-shadow: 0 0 24px rgba(77, 211, 255, 0.2);
+}
+
+.button-primary:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 0 38px rgba(104, 196, 255, 0.38);
+}
+
+.button-secondary {
+  display: inline-flex;
+  align-items: center;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 255, 255, 0.24);
+  background: rgba(255, 255, 255, 0.04);
+  padding: 0.7rem 1.35rem;
+  color: rgba(245, 247, 255, 0.86);
+}
+
+.button-secondary:hover {
+  border-color: rgba(255, 255, 255, 0.44);
+  color: #ffffff;
+}
+
+.glow-card {
+  box-shadow:
+    0 0 0 1px rgba(255, 255, 255, 0.08) inset,
+    0 24px 45px rgba(0, 0, 0, 0.34),
+    0 0 28px rgba(128, 89, 255, 0.06);
+}
+
+.glow-card:hover {
+  transform: translateY(-4px);
+  box-shadow:
+    0 0 0 1px rgba(116, 247, 255, 0.24) inset,
+    0 26px 58px rgba(0, 0, 0, 0.48),
+    0 0 42px rgba(120, 102, 255, 0.22);
+}
+
+.liquid-orb {
+  position: absolute;
+  border-radius: 999px;
+  filter: blur(4px);
+}
+
+.grain-overlay {
+  position: absolute;
+  inset: -40%;
+  opacity: 0.15;
+  background-image: radial-gradient(rgba(255, 255, 255, 0.35) 0.5px, transparent 0.8px);
+  background-size: 3px 3px;
+  mix-blend-mode: soft-light;
+  animation: drift-grain 18s linear infinite;
+}
+
+.shimmer-tile {
+  isolation: isolate;
+}
+
+.shimmer-tile::after {
+  content: "";
+  position: absolute;
+  inset: -120% auto -120% -45%;
+  width: 42%;
+  transform: rotate(18deg);
+  background: linear-gradient(
+    to right,
+    rgba(255, 255, 255, 0),
+    rgba(255, 255, 255, 0.24),
+    rgba(255, 255, 255, 0)
+  );
+  transition: left 0.6s ease;
+  pointer-events: none;
+}
+
+.shimmer-tile:hover::after {
+  left: 112%;
+}
+
+.input-field {
+  border-radius: 1rem;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  background: rgba(255, 255, 255, 0.05);
+  padding: 0.7rem 0.9rem;
+  color: #f4f7ff;
+  outline: none;
+}
+
+.input-field::placeholder {
+  color: rgba(255, 255, 255, 0.46);
+}
+
+.input-field:focus {
+  border-color: rgba(82, 236, 255, 0.76);
+  box-shadow: 0 0 0 2px rgba(82, 236, 255, 0.2);
+}
+
+@keyframes drift-grain {
+  from {
+    transform: translate3d(0, 0, 0);
+  }
+  to {
+    transform: translate3d(12%, 10%, 0);
+  }
+}
+
+@media (min-width: 768px) {
+  .section-wrap {
+    padding-inline: 2rem;
+  }
+}
