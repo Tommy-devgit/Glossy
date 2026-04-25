@@ -11,28 +11,31 @@ export function ContactForm() {
   };
 
   return (
-    <div className="grid gap-8 lg:grid-cols-[1.05fr_.95fr]">
-      <form className="glass-panel rounded-3xl p-6 md:p-8" onSubmit={handleSubmit}>
-        <h2 className="text-3xl text-white">Contact our studio</h2>
-        <p className="mt-2 text-sm text-white/65">Tell us about your project and we will send a tailored recommendation.</p>
+    <div className="grid gap-6 lg:grid-cols-[1.05fr_.95fr]">
+      <form className="paper-card rounded-[1.8rem] p-6 md:p-8" onSubmit={handleSubmit}>
+        <p className="eyebrow">Contact</p>
+        <h2 className="mt-3 text-4xl">Tell us about your project</h2>
+        <p className="mt-3 text-sm leading-relaxed text-[var(--muted)]">
+          Share the space, mood, or kind of collection you have in mind and the studio can respond with a tailored direction.
+        </p>
 
         <div className="mt-6 grid gap-4">
-          <label className="grid gap-2 text-sm text-white/80">
+          <label className="grid gap-2 text-sm text-[rgba(36,22,15,0.8)]">
             Name
             <input required className="input-field" name="name" placeholder="Full name" />
           </label>
-          <label className="grid gap-2 text-sm text-white/80">
+          <label className="grid gap-2 text-sm text-[rgba(36,22,15,0.8)]">
             Email
             <input required type="email" className="input-field" name="email" placeholder="you@email.com" />
           </label>
-          <label className="grid gap-2 text-sm text-white/80">
-            Message
+          <label className="grid gap-2 text-sm text-[rgba(36,22,15,0.8)]">
+            Project details
             <textarea
               required
               rows={5}
               className="input-field resize-none"
               name="message"
-              placeholder="What memory would you like transformed?"
+              placeholder="Residential, hospitality, retail, or commissioned collection?"
             />
           </label>
         </div>
@@ -41,31 +44,27 @@ export function ContactForm() {
           Send Message
         </button>
 
-        {sent ? <p className="mt-4 text-sm text-cyan-200">Message sent. A Glossy specialist will respond shortly.</p> : null}
+        {sent ? <p className="mt-4 text-sm text-[rgba(36,22,15,0.76)]">Message sent. The studio will follow up shortly.</p> : null}
       </form>
 
-      <aside className="space-y-5">
-        <div className="glass-panel rounded-3xl p-6">
-          <p className="text-xs uppercase tracking-[0.2em] text-cyan-200/70">WhatsApp</p>
-          <h3 className="mt-2 text-2xl text-white">Instant support</h3>
-          <p className="mt-3 text-sm text-white/65">Share inspiration images and ask about dimensions, finishes, and delivery windows.</p>
-          <a
-            className="mt-5 inline-flex rounded-full border border-white/25 px-5 py-2 text-sm text-white transition hover:border-cyan-300 hover:text-cyan-100"
-            href="https://wa.me/15551234567"
-            target="_blank"
-            rel="noreferrer"
-          >
-            Chat on WhatsApp
-          </a>
+      <aside className="grid gap-5">
+        <div className="paper-card rounded-[1.8rem] p-6">
+          <p className="eyebrow">Studio Hours</p>
+          <h3 className="mt-3 text-3xl">By appointment</h3>
+          <p className="mt-3 text-sm leading-relaxed text-[var(--muted)]">
+            Monday to Friday, with remote consultations for private clients and project teams.
+          </p>
         </div>
 
-        <div className="glass-panel rounded-3xl p-6">
-          <p className="text-xs uppercase tracking-[0.2em] text-cyan-200/70">Email</p>
-          <h3 className="mt-2 text-2xl text-white">hello@glossy.art</h3>
-          <p className="mt-3 text-sm text-white/65">For partnerships, interior design collaborations, and custom commissions.</p>
+        <div className="paper-card rounded-[1.8rem] p-6">
+          <p className="eyebrow">Email</p>
+          <h3 className="mt-3 text-3xl">hello@glossyatelier.com</h3>
+          <p className="mt-3 text-sm leading-relaxed text-[var(--muted)]">
+            Use this for commissions, collaborations, procurement, or replacement of the temporary placeholder content.
+          </p>
           <a
-            className="mt-5 inline-flex rounded-full border border-white/25 px-5 py-2 text-sm text-white transition hover:border-cyan-300 hover:text-cyan-100"
-            href="mailto:hello@glossy.art"
+            className="button-secondary mt-5"
+            href="mailto:hello@glossyatelier.com"
           >
             Send Email
           </a>

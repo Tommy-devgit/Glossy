@@ -17,24 +17,17 @@ const manrope = Manrope({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://glossy.art"),
+  metadataBase: new URL("https://glossyatelier.com"),
   title: {
-    default: "Glossy | Resin Memory Art",
+    default: "Glossy Atelier | Curated Art Landing Page",
     template: "%s | Glossy",
   },
-  description:
-    "Glossy transforms your personal photos into handcrafted epoxy-coated artwork with a glass-like luxury finish.",
-  keywords: [
-    "epoxy art",
-    "resin photo print",
-    "luxury wall art",
-    "memory preservation",
-    "handcrafted resin artwork",
-  ],
+  description: "A warm editorial landing page for Glossy Atelier, featuring curated art collections, artists, and commissions.",
+  keywords: ["art curation", "gallery landing page", "art advisory", "artists", "editorial design"],
   openGraph: {
-    title: "Glossy",
-    description: "Luxury resin-coated photo artwork for lasting memories.",
-    siteName: "Glossy",
+    title: "Glossy Atelier",
+    description: "Curated art, thoughtful collections, and commissioned works for refined spaces.",
+    siteName: "Glossy Atelier",
     type: "website",
   },
 };
@@ -46,8 +39,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className={`${sora.variable} ${manrope.variable} h-full antialiased`}>
-      <body className="min-h-full overflow-x-hidden text-white">
-        <div className="site-bg" aria-hidden />
+      <body className="min-h-full overflow-x-hidden text-[var(--foreground)]">
         <div className="relative z-10 flex min-h-screen flex-col">
           <SiteHeader />
           <main className="flex-1">{children}</main>
