@@ -35,7 +35,7 @@ export function SiteHeader() {
 
           <div className="hidden md:block">
             <Link href="/contact" className="button-primary text-sm">
-              Book a Call
+              Begin Your Piece
             </Link>
           </div>
 
@@ -64,7 +64,7 @@ export function SiteHeader() {
               </Link>
             ))}
             <Link href="/contact" className="button-primary mt-2" onClick={() => setMenuOpen(false)}>
-              Book a Call
+              Begin Your Piece
             </Link>
           </nav>
         ) : null}

@@ -1,6 +1,7 @@
 "use client";
 
 import { AnimatePresence, motion } from "framer-motion";
+import Image from "next/image";
 import { galleryCategories, featuredWorks } from "@/lib/site-data";
 import { useMemo, useState } from "react";
 
@@ -48,7 +49,13 @@ export function GalleryFilter() {
               className="paper-card overflow-hidden rounded-[1.6rem] p-3"
             >
               <div className="art-frame h-80">
-                <img src={item.image} alt={item.title} loading="lazy" className="rounded-[1rem]" />
+                <Image
+                  src={item.image}
+                  alt={item.title}
+                  width={900}
+                  height={1125}
+                  className="h-full rounded-[1rem] w-full object-cover"
+                />
               </div>
               <div className="px-2 pb-2 pt-4">
                 <div className="flex items-start justify-between gap-3">
@@ -58,7 +65,7 @@ export function GalleryFilter() {
                   </div>
                   <span className="label-chip">{item.category}</span>
                 </div>
-                <p className="mt-4 text-sm text-[var(--muted)]">Placeholder artwork from Unsplash for the temporary gallery direction.</p>
+                <p className="mt-4 text-sm text-[var(--muted)]">A polished study in depth, light, and lasting visual presence.</p>
               </div>
             </motion.article>
           ))}

@@ -9,11 +9,10 @@ export function SiteFooter() {
           <div className="max-w-xl">
             <p className="eyebrow">Glossy Atelier</p>
             <h2 className="mt-3 text-3xl text-[var(--foreground)] md:text-4xl">
-              Curated art stories for spaces that prefer atmosphere over noise.
+              Handcrafted photographic artworks with a luminous, enduring finish.
             </h2>
             <p className="mt-4 max-w-lg text-sm leading-relaxed text-[var(--muted)]">
-              Built as an editorial gallery landing page with warm tones, placeholder artworks from Unsplash, and a
-              calmer navigation structure.
+              Made to preserve personal memories with clarity, depth, and care.
             </p>
           </div>
 

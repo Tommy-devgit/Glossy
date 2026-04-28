@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { SitePreferencesProvider } from "@/components/site-preferences-provider";
 import { Manrope, Sora } from "next/font/google";
 import { SiteFooter } from "@/components/site-footer";
 import { SiteHeader } from "@/components/site-header";
@@ -19,14 +20,14 @@ const manrope = Manrope({
 export const metadata: Metadata = {
   metadataBase: new URL("https://glossyatelier.com"),
   title: {
-    default: "Glossy Atelier | Curated Art Landing Page",
-    template: "%s | Glossy",
+    default: "Glossy Atelier | Handcrafted Gloss-Finished Photo Art",
+    template: "%s | Glossy Atelier",
   },
-  description: "A warm editorial landing page for Glossy Atelier, featuring curated art collections, artists, and commissions.",
-  keywords: ["art curation", "gallery landing page", "art advisory", "artists", "editorial design"],
+  description: "Glossy Atelier transforms treasured photographs into handcrafted artworks with a luminous, glass-like finish.",
+  keywords: ["photo art", "luxury photo artwork", "epoxy photo art", "gloss-finished artwork", "custom portrait art"],
   openGraph: {
     title: "Glossy Atelier",
-    description: "Curated art, thoughtful collections, and commissioned works for refined spaces.",
+    description: "Handcrafted photo artworks with a luminous finish, created to preserve personal memories as lasting art.",
     siteName: "Glossy Atelier",
     type: "website",
   },
@@ -40,11 +41,13 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${sora.variable} ${manrope.variable} h-full antialiased`}>
       <body className="min-h-full overflow-x-hidden text-[var(--foreground)]">
-        <div className="relative z-10 flex min-h-screen flex-col">
-          <SiteHeader />
-          <main className="flex-1">{children}</main>
-          <SiteFooter />
-        </div>
+        <SitePreferencesProvider>
+          <div className="relative z-10 flex min-h-screen flex-col">
+            <SiteHeader />
+            <main className="flex-1">{children}</main>
+            <SiteFooter />
+          </div>
+        </SitePreferencesProvider>
       </body>
     </html>
   );
