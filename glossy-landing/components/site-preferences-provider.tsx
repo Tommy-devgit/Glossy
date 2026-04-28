@@ -44,6 +44,9 @@ export function SitePreferencesProvider({ children }: { children: ReactNode }) {
 
   useEffect(() => {
     document.documentElement.dataset.theme = theme;
+    document.documentElement.classList.toggle("dark", theme === "dark");
+    document.body.dataset.theme = theme;
+    document.body.classList.toggle("dark", theme === "dark");
     window.localStorage.setItem(STORAGE_THEME_KEY, theme);
   }, [theme]);
 

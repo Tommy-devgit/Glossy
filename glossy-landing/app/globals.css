@@ -25,7 +25,10 @@
   --shadow: 0 22px 60px rgba(77, 55, 42, 0.08);
 }
 
-html[data-theme="dark"] {
+html[data-theme="dark"],
+body[data-theme="dark"],
+html.dark,
+body.dark {
   --background: #11100f;
   --background-strong: #181615;
   --surface: rgba(25, 22, 20, 0.86);
@@ -59,6 +62,7 @@ html[data-theme="dark"] {
 
 html {
   scroll-behavior: smooth;
+  background: var(--body-middle);
 }
 
 body {
@@ -70,6 +74,9 @@ body {
   color: var(--foreground);
   font-family: var(--font-manrope), "Segoe UI", sans-serif;
   text-wrap: pretty;
+  transition:
+    background-color 220ms ease,
+    color 220ms ease;
 }
 
 body::before {

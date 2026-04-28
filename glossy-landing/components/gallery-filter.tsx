@@ -2,12 +2,16 @@
 
 import { AnimatePresence, motion } from "framer-motion";
 import Image from "next/image";
-import { galleryCategories, featuredWorks } from "@/lib/site-data";
 import { useMemo, useState } from "react";
+import { useSitePreferences } from "@/components/site-preferences-provider";
+import { galleryCategories, featuredWorks } from "@/lib/site-data";
+import { translations } from "@/lib/translations";
 
 export function GalleryFilter() {
   const [activeCategory, setActiveCategory] =
     useState<(typeof galleryCategories)[number]>("All");
+  const { locale } = useSitePreferences();
+  const copy = translations[locale].gallery;
 
   const filteredItems = useMemo(
     () =>
@@ -27,11 +31,19 @@ export function GalleryFilter() {
             onClick={() => setActiveCategory(category)}
             className={`rounded-full border px-5 py-2 text-sm ${
               activeCategory === category
-                ? "border-[rgba(36,22,15,0.18)] bg-[var(--foreground)] text-[#fff8ef]"
-                : "border-[var(--line)] bg-white/70 text-[rgba(36,22,15,0.72)] hover:bg-white"
+                ? "border-[var(--line)] bg-[var(--foreground)] text-[var(--background)]"
+                : "border-[var(--line)] bg-[var(--chip-surface)] text-[var(--soft-text)] hover:bg-[var(--nav-surface)]"
             }`}
           >
-            {category}
+            {category === "All"
+              ? copy.filters.all
+              : category === "Traditional"
+                ? copy.filters.traditional
+                : category === "Ordinary"
+                  ? copy.filters.ordinary
+                  : category === "Historical"
+                    ? copy.filters.historical
+                    : copy.filters.landscape}
           </button>
         ))}
       </div>
@@ -61,11 +73,19 @@ export function GalleryFilter() {
                 <div className="flex items-start justify-between gap-3">
                   <div>
                     <h3 className="text-2xl">{item.title}</h3>
-                    <p className="mt-2 text-xs uppercase tracking-[0.2em] text-[rgba(36,22,15,0.48)]">{item.artist}</p>
+                    <p className="mt-2 text-xs uppercase tracking-[0.2em] text-[var(--soft-text-strong)]">{item.artist}</p>
                   </div>
-                  <span className="label-chip">{item.category}</span>
+                  <span className="label-chip">
+                    {item.category === "Traditional"
+                      ? copy.filters.traditional
+                      : item.category === "Ordinary"
+                        ? copy.filters.ordinary
+                        : item.category === "Historical"
+                          ? copy.filters.historical
+                          : copy.filters.landscape}
+                  </span>
                 </div>
-                <p className="mt-4 text-sm text-[var(--muted)]">A polished study in depth, light, and lasting visual presence.</p>
+                <p className="mt-4 text-sm text-[var(--muted)]">{copy.itemNote}</p>
               </div>
             </motion.article>
           ))}

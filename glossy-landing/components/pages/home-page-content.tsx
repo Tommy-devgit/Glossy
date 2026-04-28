@@ -59,6 +59,33 @@ function ArtworkStrip({
 export function HomePageContent() {
   const { locale } = useSitePreferences();
   const copy = translations[locale].home;
+  const localizedProfiles =
+    locale === "am"
+      ? artistProfiles.map((artist, index) => ({
+          ...artist,
+          specialty: ["የፖርትሬት ጥናቶች", "ትልቅ የውስጥ ስራዎች", "ልዩ ኮሚሽኖች", "ዘመናዊ የግል ስራዎች"][index],
+        }))
+      : artistProfiles;
+  const localizedTestimonials =
+    locale === "am"
+      ? [
+          {
+            quote: "Glossy Atelier የሰርጋችንን ፎቶ ፈጽሞ አዲስ ሕይወት ሰጠው። ከተለመደ ፕሪንት ይልቅ እውነተኛ የስነ ጥበብ ስራ ይመስላል።",
+            name: "Claire M.",
+            role: "የግል ደንበኛ",
+          },
+          {
+            quote: "የጨረሱ ጥራት አስደናቂ ነው። ብርሃንን በውብ ሁኔታ ይይዛል እና ለፖርትሬቱ ያልጠበቅነውን ጥልቀት ሰጥቶታል።",
+            name: "Daniel R.",
+            role: "የግል ደንበኛ",
+          },
+          {
+            quote: "ለቤታችን የግል ነገር እፈልግ ነበር፣ ነገር ግን የተጠራጠረ ሆኖ እንዲቆይ ፈልጌ ነበር። የመጨረሻው ስራ በእውነት የተመረመረ እና ውብ ነበር።",
+            name: "Nadia T.",
+            role: "የግል ደንበኛ",
+          },
+        ]
+      : testimonials;
 
   return (
     <>
@@ -173,7 +200,7 @@ export function HomePageContent() {
             </div>
 
             <div className="mt-6 grid gap-4 md:grid-cols-4">
-              {artistProfiles.map((artist) => (
+              {localizedProfiles.map((artist) => (
                 <article key={artist.name} className="paper-card rounded-[1.5rem] p-4">
                   <div className="art-frame h-72">
                     <Image
@@ -216,7 +243,7 @@ export function HomePageContent() {
               <p className="eyebrow">{copy.testimonialsEyebrow}</p>
               <h2 className="mt-3 text-4xl">{copy.testimonialsTitle}</h2>
               <div className="mt-6 grid gap-4 md:grid-cols-3">
-                {testimonials.map((item) => (
+                {localizedTestimonials.map((item) => (
                   <blockquote key={item.name} className="paper-card rounded-[1.4rem] p-4">
                     <p className="text-sm leading-relaxed text-[var(--muted)]">&ldquo;{item.quote}&rdquo;</p>
                     <footer className="mt-4 text-sm font-medium text-[var(--foreground)]">
