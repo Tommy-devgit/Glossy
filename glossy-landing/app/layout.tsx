@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { SitePreferencesProvider } from "@/components/site-preferences-provider";
-import { Manrope, Sora } from "next/font/google";
+import { Manrope, Parisienne, Sora } from "next/font/google";
 import { SiteFooter } from "@/components/site-footer";
 import { SiteHeader } from "@/components/site-header";
 import "./globals.css";
@@ -17,18 +17,24 @@ const manrope = Manrope({
   weight: ["400", "500", "600", "700"],
 });
 
+const parisienne = Parisienne({
+  variable: "--font-brand",
+  subsets: ["latin"],
+  weight: ["400"],
+});
+
 export const metadata: Metadata = {
   metadataBase: new URL("https://glossyatelier.com"),
   title: {
-    default: "Glossy Atelier | Handcrafted Gloss-Finished Photo Art",
-    template: "%s | Glossy Atelier",
+    default: "glossy | Handcrafted Gloss-Finished Photo Art",
+    template: "%s | glossy",
   },
-  description: "Glossy Atelier transforms treasured photographs into handcrafted artworks with a luminous, glass-like finish.",
+  description: "glossy transforms treasured photographs into handcrafted artworks with a luminous, glass-like finish.",
   keywords: ["photo art", "luxury photo artwork", "epoxy photo art", "gloss-finished artwork", "custom portrait art"],
   openGraph: {
-    title: "Glossy Atelier",
+    title: "glossy",
     description: "Handcrafted photo artworks with a luminous finish, created to preserve personal memories as lasting art.",
-    siteName: "Glossy Atelier",
+    siteName: "glossy",
     type: "website",
   },
 };
@@ -39,7 +45,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={`${sora.variable} ${manrope.variable} h-full antialiased`}>
+    <html lang="en" className={`${sora.variable} ${manrope.variable} ${parisienne.variable} h-full antialiased`}>
       <body className="min-h-full overflow-x-hidden text-[var(--foreground)]">
         <SitePreferencesProvider>
           <div className="relative z-10 flex min-h-screen flex-col">

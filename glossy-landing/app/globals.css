@@ -58,38 +58,23 @@ body.dark {
   --color-foreground: var(--foreground);
   --font-sans: var(--font-manrope);
   --font-display: var(--font-sora);
+  --font-brand: var(--font-brand);
 }
 
 html {
   scroll-behavior: smooth;
-  background: var(--body-middle);
+  background: var(--background);
 }
 
 body {
   position: relative;
-  background:
-    radial-gradient(circle at top left, rgba(255, 255, 255, 0.16), transparent 32%),
-    radial-gradient(circle at bottom right, rgba(232, 208, 191, 0.18), transparent 26%),
-    linear-gradient(180deg, var(--body-start) 0%, var(--body-middle) 38%, var(--body-end) 100%);
+  background: var(--background);
   color: var(--foreground);
   font-family: var(--font-manrope), "Segoe UI", sans-serif;
   text-wrap: pretty;
   transition:
     background-color 220ms ease,
     color 220ms ease;
-}
-
-body::before {
-  content: "";
-  position: fixed;
-  inset: 0;
-  z-index: 0;
-  pointer-events: none;
-  background-image:
-    linear-gradient(var(--grid-line) 1px, transparent 1px),
-    linear-gradient(90deg, var(--grid-line) 1px, transparent 1px);
-  background-size: 72px 72px;
-  mask-image: linear-gradient(180deg, rgba(0, 0, 0, 0.55), transparent 92%);
 }
 
 h1,
@@ -99,6 +84,11 @@ h4 {
   font-family: "Iowan Old Style", "Palatino Linotype", "Book Antiqua", Georgia, serif;
   letter-spacing: -0.03em;
   line-height: 0.96;
+}
+
+.font-brand {
+  font-family: var(--font-brand), "Brush Script MT", cursive;
+  letter-spacing: 0;
 }
 
 a,
@@ -127,11 +117,8 @@ button {
 
 .paper-panel {
   border: 1px solid var(--line);
-  background:
-    linear-gradient(180deg, color-mix(in srgb, var(--surface-strong) 88%, transparent), color-mix(in srgb, var(--surface) 96%, transparent)),
-    var(--surface);
+  background: var(--surface);
   box-shadow: var(--shadow);
-  backdrop-filter: blur(16px);
 }
 
 .button-primary {
@@ -173,7 +160,6 @@ button {
   border: 1px solid var(--line);
   background: var(--card-surface);
   box-shadow: var(--shadow);
-  backdrop-filter: blur(12px);
 }
 
 .paper-card:hover {
@@ -212,7 +198,7 @@ button {
 
 .soft-divider {
   height: 1px;
-  background: linear-gradient(90deg, transparent, color-mix(in srgb, var(--foreground) 18%, transparent), transparent);
+  background: color-mix(in srgb, var(--foreground) 12%, transparent);
 }
 
 .art-frame {
