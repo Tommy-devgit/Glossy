@@ -1,3 +1,23 @@
+import pic1 from "@/assets/pic-1.jpg";
+import pic2 from "@/assets/pic-2.jpg";
+import pic3 from "@/assets/pic-3.jpg";
+import pic4 from "@/assets/pic-4.jpg";
+import pic5 from "@/assets/pic-5.jpg";
+import pic6 from "@/assets/pic-6.jpg";
+import pic7 from "@/assets/pic-7.jpg";
+import pic8 from "@/assets/pic-8.jpg";
+import pic9 from "@/assets/pic-9.jpg";
+import pic10 from "@/assets/pic-10.jpg";
+import pic11 from "@/assets/pic-11.jpg";
+import pic12 from "@/assets/pic-12.jpg";
+import pic13 from "@/assets/pic-13.jpg";
+import pic14 from "@/assets/pic-14.jpg";
+import pic15 from "@/assets/pic-15.jpg";
+import pic16 from "@/assets/pic-16.jpg";
+import pic17 from "@/assets/pic-17.jpg";
+import pic18 from "@/assets/pic-18.jpg";
+import pic19 from "@/assets/pic-19.jpg";
+
 export type NavLink = {
   href: string;
   label: string;
@@ -15,14 +35,14 @@ export type Artwork = {
   artist: string;
   category: "Traditional" | "Ordinary" | "Historical" | "Landscape";
   year: string;
-  image: string;
+  image: typeof pic1;
 };
 
 export type ArtistProfile = {
   name: string;
   specialty: string;
   city: string;
-  image: string;
+  image: typeof pic1;
 };
 
 export type PricingTier = {
@@ -70,114 +90,18 @@ export const studioOfferings: StudioOffering[] = [
 ];
 
 export const featuredWorks: Artwork[] = [
-  {
-    id: 1,
-    title: "Muted Shore",
-    artist: "Ava Mercer",
-    category: "Traditional",
-    year: "1892",
-    image:
-      "https://images.unsplash.com/photo-1579783902614-a3fb3927b6a5?auto=format&fit=crop&w=900&q=80",
-  },
-  {
-    id: 2,
-    title: "Winter Passage",
-    artist: "Iris Vale",
-    category: "Traditional",
-    year: "1904",
-    image:
-      "https://images.unsplash.com/photo-1460661419201-fd4cecdf8a8b?auto=format&fit=crop&w=900&q=80",
-  },
-  {
-    id: 3,
-    title: "After Rain",
-    artist: "Milo Hart",
-    category: "Ordinary",
-    year: "1911",
-    image:
-      "https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=900&q=80",
-  },
-  {
-    id: 4,
-    title: "Dusklight Meadow",
-    artist: "Esme Rowan",
-    category: "Historical",
-    year: "1888",
-    image:
-      "https://images.unsplash.com/photo-1504198453319-5ce911bafcde?auto=format&fit=crop&w=900&q=80",
-  },
-  {
-    id: 5,
-    title: "Velvet Hill",
-    artist: "Noah Linton",
-    category: "Ordinary",
-    year: "1920",
-    image:
-      "https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=900&q=80",
-  },
-  {
-    id: 6,
-    title: "Quiet Valley",
-    artist: "Clara Finch",
-    category: "Landscape",
-    year: "1901",
-    image:
-      "https://images.unsplash.com/photo-1441974231531-c6227db76b6e?auto=format&fit=crop&w=900&q=80",
-  },
-  {
-    id: 7,
-    title: "Garden Crossing",
-    artist: "Ella Briar",
-    category: "Historical",
-    year: "1876",
-    image:
-      "https://images.unsplash.com/photo-1470770841072-f978cf4d019e?auto=format&fit=crop&w=900&q=80",
-  },
-  {
-    id: 8,
-    title: "Cloud Study",
-    artist: "Jules Arden",
-    category: "Landscape",
-    year: "1898",
-    image:
-      "https://images.unsplash.com/photo-1501854140801-50d01698950b?auto=format&fit=crop&w=900&q=80",
-  },
-  {
-    id: 9,
-    title: "Marsh Echo",
-    artist: "Rhea Sol",
-    category: "Traditional",
-    year: "1913",
-    image:
-      "https://images.unsplash.com/photo-1518837695005-2083093ee35b?auto=format&fit=crop&w=900&q=80",
-  },
-  {
-    id: 10,
-    title: "Museum Steps",
-    artist: "Theo Wren",
-    category: "Historical",
-    year: "1883",
-    image:
-      "https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&w=900&q=80",
-  },
-  {
-    id: 11,
-    title: "Silk Horizon",
-    artist: "Nina Sloane",
-    category: "Landscape",
-    year: "1907",
-    image:
-      "https://images.unsplash.com/photo-1433086966358-54859d0ed716?auto=format&fit=crop&w=900&q=80",
-  },
-  {
-    id: 12,
-    title: "Daybreak Still",
-    artist: "Lea Maren",
-    category: "Ordinary",
-    year: "1918",
-    image:
-      "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=900&q=80",
-  },
+  { id: 1, title: "Muted Shore", artist: "Ava Mercer", category: "Traditional", year: "1892", image: pic1 },
+  { id: 2, title: "Winter Passage", artist: "Iris Vale", category: "Traditional", year: "1904", image: pic2 },
+  { id: 3, title: "After Rain", artist: "Milo Hart", category: "Ordinary", year: "1911", image: pic3 },
+  { id: 4, title: "Dusklight Meadow", artist: "Esme Rowan", category: "Historical", year: "1888", image: pic4 },
+  { id: 5, title: "Velvet Hill", artist: "Noah Linton", category: "Ordinary", year: "1920", image: pic5 },
+  { id: 6, title: "Quiet Valley", artist: "Clara Finch", category: "Landscape", year: "1901", image: pic6 },
+  { id: 7, title: "Garden Crossing", artist: "Ella Briar", category: "Historical", year: "1876", image: pic7 },
+  { id: 8, title: "Cloud Study", artist: "Jules Arden", category: "Landscape", year: "1898", image: pic8 },
+  { id: 9, title: "Marsh Echo", artist: "Rhea Sol", category: "Traditional", year: "1913", image: pic9 },
+  { id: 10, title: "Museum Steps", artist: "Theo Wren", category: "Historical", year: "1883", image: pic10 },
+  { id: 11, title: "Silk Horizon", artist: "Nina Sloane", category: "Landscape", year: "1907", image: pic11 },
+  { id: 12, title: "Daybreak Still", artist: "Lea Maren", category: "Ordinary", year: "1918", image: pic12 },
 ];
 
 export const galleryCategories = [
@@ -189,35 +113,17 @@ export const galleryCategories = [
 ] as const;
 
 export const artistProfiles: ArtistProfile[] = [
-  {
-    name: "Amara Bell",
-    specialty: "Portrait studies",
-    city: "London",
-    image:
-      "https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=900&q=80",
-  },
-  {
-    name: "Jonah Reed",
-    specialty: "Large landscapes",
-    city: "Copenhagen",
-    image:
-      "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=900&q=80",
-  },
-  {
-    name: "Selene Frost",
-    specialty: "Symbolist commissions",
-    city: "Milan",
-    image:
-      "https://images.unsplash.com/photo-1488426862026-3ee34a7d66df?auto=format&fit=crop&w=900&q=80",
-  },
-  {
-    name: "Mina Hart",
-    specialty: "Modern still life",
-    city: "Paris",
-    image:
-      "https://images.unsplash.com/photo-1517841905240-472988babdf9?auto=format&fit=crop&w=900&q=80",
-  },
+  { name: "Amara Bell", specialty: "Portrait studies", city: "London", image: pic13 },
+  { name: "Jonah Reed", specialty: "Large landscapes", city: "Copenhagen", image: pic14 },
+  { name: "Selene Frost", specialty: "Symbolist commissions", city: "Milan", image: pic15 },
+  { name: "Mina Hart", specialty: "Modern still life", city: "Paris", image: pic16 },
 ];
+
+export const homeFeatureImages = {
+  hero: pic17,
+  gallery: pic18,
+  accent: pic19,
+};
 
 export const pricingTiers: PricingTier[] = [
   {
@@ -265,7 +171,7 @@ export const processSteps: ProcessStep[] = [
 
 export const testimonials: Testimonial[] = [
   {
-    quote: "Glossy Atelier gave our wedding photograph a completely new life. It feels less like a print and more like a true piece of art.",
+    quote: "glossy gave our wedding photograph a completely new life. It feels less like a print and more like a true piece of art.",
     name: "Claire M.",
     role: "Private client",
   },

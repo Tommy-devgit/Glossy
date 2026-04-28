@@ -3,9 +3,11 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState } from "react";
+import { BrandWordmark } from "@/components/brand-wordmark";
+import { MoonIcon, SunIcon } from "@/components/site-icons";
+import { useSitePreferences } from "@/components/site-preferences-provider";
 import { navigationLinks } from "@/lib/site-data";
 import { translations } from "@/lib/translations";
-import { useSitePreferences } from "@/components/site-preferences-provider";
 
 export function SiteHeader() {
   const pathname = usePathname();
@@ -25,8 +27,8 @@ export function SiteHeader() {
     <header className="sticky top-0 z-50">
       <div className="section-wrap pt-4 md:pt-6">
         <div className="paper-panel flex items-center justify-between rounded-full px-4 py-3 md:px-6">
-          <Link href="/" className="text-sm font-semibold tracking-[0.3em] text-[var(--foreground)] uppercase">
-            Glossy Atelier
+          <Link href="/" className="text-[2rem] text-[var(--foreground)] md:text-[2.35rem]">
+            <BrandWordmark />
           </Link>
 
           <nav className="hidden items-center gap-1 rounded-full border border-[var(--line)] bg-[var(--nav-surface)] p-1 md:flex">
@@ -49,31 +51,43 @@ export function SiteHeader() {
             <div className="flex items-center rounded-full border border-[var(--line)] bg-[var(--nav-surface)] p-1">
               <button
                 type="button"
-                className={`rounded-full px-3 py-2 text-xs ${theme === "light" ? "bg-[var(--foreground)] text-[var(--background)]" : "text-[var(--soft-text)]"}`}
+                aria-label={copy.themeLight}
+                title={copy.themeLight}
+                className={`rounded-full p-2.5 ${
+                  theme === "light" ? "bg-[var(--foreground)] text-[var(--background)]" : "text-[var(--soft-text)]"
+                }`}
                 onClick={() => setTheme("light")}
               >
-                {copy.themeLight}
+                <SunIcon className="h-4 w-4" />
               </button>
               <button
                 type="button"
-                className={`rounded-full px-3 py-2 text-xs ${theme === "dark" ? "bg-[var(--foreground)] text-[var(--background)]" : "text-[var(--soft-text)]"}`}
+                aria-label={copy.themeDark}
+                title={copy.themeDark}
+                className={`rounded-full p-2.5 ${
+                  theme === "dark" ? "bg-[var(--foreground)] text-[var(--background)]" : "text-[var(--soft-text)]"
+                }`}
                 onClick={() => setTheme("dark")}
               >
-                {copy.themeDark}
+                <MoonIcon className="h-4 w-4" />
               </button>
             </div>
 
             <div className="flex items-center rounded-full border border-[var(--line)] bg-[var(--nav-surface)] p-1">
               <button
                 type="button"
-                className={`rounded-full px-3 py-2 text-xs ${locale === "en" ? "bg-[var(--foreground)] text-[var(--background)]" : "text-[var(--soft-text)]"}`}
+                className={`rounded-full px-3 py-2 text-xs ${
+                  locale === "en" ? "bg-[var(--foreground)] text-[var(--background)]" : "text-[var(--soft-text)]"
+                }`}
                 onClick={() => setLocale("en")}
               >
                 {copy.languageEn}
               </button>
               <button
                 type="button"
-                className={`rounded-full px-3 py-2 text-xs ${locale === "am" ? "bg-[var(--foreground)] text-[var(--background)]" : "text-[var(--soft-text)]"}`}
+                className={`rounded-full px-3 py-2 text-xs ${
+                  locale === "am" ? "bg-[var(--foreground)] text-[var(--background)]" : "text-[var(--soft-text)]"
+                }`}
                 onClick={() => setLocale("am")}
               >
                 {copy.languageAm}
@@ -115,31 +129,43 @@ export function SiteHeader() {
               <div className="flex items-center rounded-full border border-[var(--line)] p-1">
                 <button
                   type="button"
-                  className={`flex-1 rounded-full px-3 py-2 text-xs ${theme === "light" ? "bg-[var(--foreground)] text-[var(--background)]" : "text-[var(--soft-text)]"}`}
+                  aria-label={copy.themeLight}
+                  title={copy.themeLight}
+                  className={`flex flex-1 items-center justify-center rounded-full p-2.5 ${
+                    theme === "light" ? "bg-[var(--foreground)] text-[var(--background)]" : "text-[var(--soft-text)]"
+                  }`}
                   onClick={() => setTheme("light")}
                 >
-                  {copy.themeLight}
+                  <SunIcon className="h-4 w-4" />
                 </button>
                 <button
                   type="button"
-                  className={`flex-1 rounded-full px-3 py-2 text-xs ${theme === "dark" ? "bg-[var(--foreground)] text-[var(--background)]" : "text-[var(--soft-text)]"}`}
+                  aria-label={copy.themeDark}
+                  title={copy.themeDark}
+                  className={`flex flex-1 items-center justify-center rounded-full p-2.5 ${
+                    theme === "dark" ? "bg-[var(--foreground)] text-[var(--background)]" : "text-[var(--soft-text)]"
+                  }`}
                   onClick={() => setTheme("dark")}
                 >
-                  {copy.themeDark}
+                  <MoonIcon className="h-4 w-4" />
                 </button>
               </div>
 
               <div className="flex items-center rounded-full border border-[var(--line)] p-1">
                 <button
                   type="button"
-                  className={`flex-1 rounded-full px-3 py-2 text-xs ${locale === "en" ? "bg-[var(--foreground)] text-[var(--background)]" : "text-[var(--soft-text)]"}`}
+                  className={`flex-1 rounded-full px-3 py-2 text-xs ${
+                    locale === "en" ? "bg-[var(--foreground)] text-[var(--background)]" : "text-[var(--soft-text)]"
+                  }`}
                   onClick={() => setLocale("en")}
                 >
                   {copy.languageEn}
                 </button>
                 <button
                   type="button"
-                  className={`flex-1 rounded-full px-3 py-2 text-xs ${locale === "am" ? "bg-[var(--foreground)] text-[var(--background)]" : "text-[var(--soft-text)]"}`}
+                  className={`flex-1 rounded-full px-3 py-2 text-xs ${
+                    locale === "am" ? "bg-[var(--foreground)] text-[var(--background)]" : "text-[var(--soft-text)]"
+                  }`}
                   onClick={() => setLocale("am")}
                 >
                   {copy.languageAm}

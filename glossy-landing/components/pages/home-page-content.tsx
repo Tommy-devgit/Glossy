@@ -4,7 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { Reveal } from "@/components/reveal";
 import { useSitePreferences } from "@/components/site-preferences-provider";
-import { artistProfiles, featuredWorks, testimonials } from "@/lib/site-data";
+import { artistProfiles, featuredWorks, homeFeatureImages, testimonials } from "@/lib/site-data";
 import { translations } from "@/lib/translations";
 
 const portraitWorks = featuredWorks.slice(0, 4);
@@ -70,7 +70,7 @@ export function HomePageContent() {
     locale === "am"
       ? [
           {
-            quote: "Glossy Atelier የሰርጋችንን ፎቶ ፈጽሞ አዲስ ሕይወት ሰጠው። ከተለመደ ፕሪንት ይልቅ እውነተኛ የስነ ጥበብ ስራ ይመስላል።",
+            quote: "glossy የሰርጋችንን ፎቶ ፈጽሞ አዲስ ሕይወት ሰጠው። ከተለመደ ፕሪንት ይልቅ እውነተኛ የስነ ጥበብ ስራ ይመስላል።",
             name: "Claire M.",
             role: "የግል ደንበኛ",
           },
@@ -94,13 +94,13 @@ export function HomePageContent() {
           <div className="grid gap-6 lg:grid-cols-[1.05fr_.95fr]">
             <Reveal className="relative overflow-hidden rounded-[2rem] min-h-[30rem] lg:min-h-[38rem]">
               <Image
-                src="https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=1400&q=80"
+                src={homeFeatureImages.hero}
                 alt="A refined portrait displayed in a warmly lit interior"
                 fill
                 priority
                 className="object-cover"
               />
-              <div className="absolute inset-0 bg-[linear-gradient(125deg,rgba(18,12,10,0.82)_8%,rgba(18,12,10,0.46)_46%,rgba(18,12,10,0.18)_100%)]" />
+              <div className="absolute inset-0 bg-black/42" />
               <div className="relative z-10 flex h-full flex-col justify-between p-6 text-[#f9f2ea] md:p-10">
                 <div>
                   <p className="text-xs uppercase tracking-[0.24em] text-[#efe2d6]/72">{copy.eyebrow}</p>
@@ -146,12 +146,12 @@ export function HomePageContent() {
 
               <Reveal delay={0.16} className="relative overflow-hidden rounded-[2rem] min-h-[18rem]">
                 <Image
-                  src="https://images.unsplash.com/photo-1510070009289-b5bc34383727?auto=format&fit=crop&w=1200&q=80"
+                  src={homeFeatureImages.gallery}
                   alt="Close detail of a framed artwork in soft light"
                   fill
                   className="object-cover"
                 />
-                <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(16,12,11,0.08)_0%,rgba(16,12,11,0.58)_100%)]" />
+                <div className="absolute inset-0 bg-black/35" />
                 <div className="absolute inset-x-0 bottom-0 p-6 text-[#f9f2ea]">
                   <p className="text-xs uppercase tracking-[0.22em] text-[#efe2d6]/72">{copy.galleryEyebrow}</p>
                   <p className="mt-3 max-w-md text-sm leading-relaxed text-[#f6ecdf]/84">{copy.galleryText}</p>

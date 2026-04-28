@@ -1,9 +1,17 @@
 "use client";
 
 import Link from "next/link";
+import { BrandWordmark } from "@/components/brand-wordmark";
+import {
+  FacebookIcon,
+  InstagramIcon,
+  PinterestIcon,
+  TikTokIcon,
+  WhatsAppIcon,
+} from "@/components/site-icons";
+import { useSitePreferences } from "@/components/site-preferences-provider";
 import { navigationLinks } from "@/lib/site-data";
 import { translations } from "@/lib/translations";
-import { useSitePreferences } from "@/components/site-preferences-provider";
 
 export function SiteFooter() {
   const { locale } = useSitePreferences();
@@ -14,33 +22,42 @@ export function SiteFooter() {
     "/gallery": translations[locale].nav.gallery,
     "/contact": translations[locale].nav.contact,
   };
+  const socialLinks = [
+    { name: "Instagram", href: "https://instagram.com/glossy", icon: InstagramIcon },
+    { name: "Pinterest", href: "https://pinterest.com/glossy", icon: PinterestIcon },
+    { name: "WhatsApp", href: "https://wa.me/251911000000", icon: WhatsAppIcon },
+    { name: "TikTok", href: "https://tiktok.com/@glossy", icon: TikTokIcon },
+    { name: "Facebook", href: "https://facebook.com/glossy", icon: FacebookIcon },
+  ];
 
   return (
     <footer className="section-wrap pb-10 pt-20 md:pb-14">
       <div className="paper-panel rounded-[2rem] px-6 py-10 md:px-10 md:py-12">
         <div className="grid gap-10 lg:grid-cols-[1.25fr_.75fr_.75fr_.75fr]">
           <div className="max-w-xl">
-            <p className="eyebrow">{copy.brand}</p>
+            <div className="text-[2.8rem] text-[var(--foreground)] md:text-[3.2rem]">
+              <BrandWordmark />
+            </div>
             <h2 className="mt-3 text-3xl text-[var(--foreground)] md:text-4xl">{copy.headline}</h2>
             <p className="mt-4 max-w-lg text-sm leading-relaxed text-[var(--muted)]">{copy.body}</p>
-            <div className="mt-6 flex flex-wrap gap-2">
-              {copy.socialItems.map((social) => (
-                <a
-                  key={social}
-                  href={
-                    social === "Instagram"
-                      ? "https://instagram.com"
-                      : social === "Pinterest"
-                        ? "https://pinterest.com"
-                        : "https://wa.me"
-                  }
-                  className="rounded-full border border-[var(--line)] bg-[var(--chip-surface)] px-4 py-2 text-sm text-[var(--soft-text)]"
-                  target="_blank"
-                  rel="noreferrer"
-                >
-                  {social}
-                </a>
-              ))}
+            <div className="mt-6 flex flex-wrap items-center gap-3">
+              {socialLinks.map((social) => {
+                const Icon = social.icon;
+
+                return (
+                  <a
+                    key={social.name}
+                    href={social.href}
+                    aria-label={social.name}
+                    title={social.name}
+                    className="rounded-full border border-[var(--line)] bg-[var(--chip-surface)] p-3 text-[var(--soft-text)] hover:text-[var(--foreground)]"
+                    target="_blank"
+                    rel="noreferrer"
+                  >
+                    <Icon className="h-4 w-4" />
+                  </a>
+                );
+              })}
             </div>
           </div>
 
@@ -82,8 +99,10 @@ export function SiteFooter() {
 
         <div className="soft-divider mt-10" />
         <div className="mt-6 flex flex-col gap-3 text-sm text-[var(--soft-text)] md:flex-row md:items-center md:justify-between">
-          <p>{copy.brand}</p>
-          <p>© 2026 {copy.brand}. {copy.rights}</p>
+          <p className="text-[2rem] text-[var(--foreground)]">
+            <BrandWordmark />
+          </p>
+          <p>&copy; 2026 {copy.brand}. {copy.rights}</p>
         </div>
       </div>
     </footer>

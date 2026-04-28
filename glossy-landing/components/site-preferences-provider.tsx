@@ -26,21 +26,22 @@ const STORAGE_THEME_KEY = "glossy-theme";
 const STORAGE_LOCALE_KEY = "glossy-locale";
 
 export function SitePreferencesProvider({ children }: { children: ReactNode }) {
-  const [theme, setTheme] = useState<Theme>("light");
-  const [locale, setLocale] = useState<Locale>("en");
+  const [theme, setTheme] = useState<Theme>(() => {
+    if (typeof window === "undefined") {
+      return "light";
+    }
 
-  useEffect(() => {
     const storedTheme = window.localStorage.getItem(STORAGE_THEME_KEY);
+    return storedTheme === "dark" || storedTheme === "light" ? storedTheme : "light";
+  });
+  const [locale, setLocale] = useState<Locale>(() => {
+    if (typeof window === "undefined") {
+      return "en";
+    }
+
     const storedLocale = window.localStorage.getItem(STORAGE_LOCALE_KEY);
-
-    if (storedTheme === "dark" || storedTheme === "light") {
-      setTheme(storedTheme);
-    }
-
-    if (storedLocale === "am" || storedLocale === "en") {
-      setLocale(storedLocale);
-    }
-  }, []);
+    return storedLocale === "am" || storedLocale === "en" ? storedLocale : "en";
+  });
 
   useEffect(() => {
     document.documentElement.dataset.theme = theme;

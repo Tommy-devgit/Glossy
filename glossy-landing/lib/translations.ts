@@ -121,7 +121,7 @@ export const translations: Record<Locale, Translations> = {
       languageAm: "አማ",
     },
     footer: {
-      brand: "Glossy Atelier",
+      brand: "glossy",
       headline: "Handcrafted photographic artworks with a luminous, enduring finish.",
       body: "Made to preserve personal memories with clarity, depth, and care.",
       navigation: "Navigate",
@@ -130,13 +130,13 @@ export const translations: Record<Locale, Translations> = {
       socials: "Social",
       rights: "All rights reserved.",
       serviceItems: ["Portrait Pieces", "Memory Panels", "Signature Commissions"],
-      socialItems: ["Instagram", "Pinterest", "WhatsApp"],
+      socialItems: ["Instagram", "Pinterest", "WhatsApp", "TikTok", "Facebook"],
     },
     home: {
-      eyebrow: "Glossy Atelier",
+      eyebrow: "glossy",
       headline: "Your Memories, Finished as Art",
       subtext:
-        "Glossy Atelier transforms cherished photographs into handcrafted statement pieces, sealed beneath a luminous, glass-like surface designed to endure.",
+        "glossy transforms cherished photographs into handcrafted statement pieces, sealed beneath a luminous, glass-like surface designed to endure.",
       primaryCta: "Begin Your Piece",
       secondaryCta: "View the Gallery",
       heroBadge: "Handcrafted finish",
@@ -166,10 +166,10 @@ export const translations: Record<Locale, Translations> = {
       ctaButton: "Begin Your Piece",
     },
     about: {
-      eyebrow: "About Glossy Atelier",
+      eyebrow: "About glossy",
       title: "A studio devoted to preserving personal photographs as lasting art.",
       intro:
-        "Glossy Atelier was created for those who believe a meaningful image deserves more than a frame. Each piece is prepared with care, then finished with a luminous surface that brings depth, clarity, and permanence to the original photograph.",
+        "glossy was created for those who believe a meaningful image deserves more than a frame. Each piece is prepared with care, then finished with a luminous surface that brings depth, clarity, and permanence to the original photograph.",
       storyEyebrow: "Studio Story",
       storyTitle: "Personal memories, elevated with restraint and care.",
       storyText:
@@ -237,7 +237,7 @@ export const translations: Record<Locale, Translations> = {
       languageAm: "አማ",
     },
     footer: {
-      brand: "Glossy Atelier",
+      brand: "glossy",
       headline: "በእጅ የተሰሩ ፎቶ ስራዎች፣ የብርሃን ጥራትና ዘላቂ ግርማ ያላቸው።",
       body: "የግል ትዝታዎችን በግልጽነት፣ በጥልቀት እና በትኩረት እንዲቆዩ የተሰሩ።",
       navigation: "አሰሳ",
@@ -246,13 +246,13 @@ export const translations: Record<Locale, Translations> = {
       socials: "ማህበራዊ",
       rights: "መብቶች ሁሉ የተጠበቁ ናቸው።",
       serviceItems: ["የፖርትሬት ስራዎች", "የትዝታ ፓነሎች", "ልዩ ኮሚሽኖች"],
-      socialItems: ["Instagram", "Pinterest", "WhatsApp"],
+      socialItems: ["Instagram", "Pinterest", "WhatsApp", "TikTok", "Facebook"],
     },
     home: {
-      eyebrow: "Glossy Atelier",
+      eyebrow: "glossy",
       headline: "ትዝታዎችዎ፣ እንደ ስነ ጥበብ የተጠናቀቁ",
       subtext:
-        "Glossy Atelier የምትወዷቸውን ፎቶዎች ወደ በእጅ የተሠሩ የክብር ስራዎች ይለውጣል፤ በብሩህ እና እንደ መስታወት የሚያንጸባርቅ ገጽ ስር ተጠብቀው ለረጅም ጊዜ እንዲቆዩ ይደረጋሉ።",
+        "glossy የምትወዷቸውን ፎቶዎች ወደ በእጅ የተሠሩ የክብር ስራዎች ይለውጣል፤ በብሩህ እና እንደ መስታወት የሚያንጸባርቅ ገጽ ስር ተጠብቀው ለረጅም ጊዜ እንዲቆዩ ይደረጋሉ።",
       primaryCta: "ስራዎን ያስጀምሩ",
       secondaryCta: "ማዕከለ-ስዕላቱን ይመልከቱ",
       heroBadge: "በእጅ የተጠናቀቀ",
@@ -282,10 +282,10 @@ export const translations: Record<Locale, Translations> = {
       ctaButton: "ስራዎን ያስጀምሩ",
     },
     about: {
-      eyebrow: "ስለ Glossy Atelier",
+      eyebrow: "ስለ glossy",
       title: "የግል ፎቶዎችን ወደ ዘላቂ ስነ ጥበብ ለማድረግ የተሰጠ ስቱዲዮ።",
       intro:
-        "Glossy Atelier ትርጉም ያለው ምስል ከመደበኛ ክፈፍ በላይ ይገባዋል ብለው ለሚያምኑ ሰዎች ተፈጥሯል። እያንዳንዱ ስራ በጥንቃቄ ይዘጋጃል፣ ከዚያም ለመጀመሪያው ፎቶ ጥልቀት፣ ግልጽነት እና ዘላቂነት የሚሰጥ ብሩህ ገጽ ይሰጠዋል።",
+        "glossy ትርጉም ያለው ምስል ከመደበኛ ክፈፍ በላይ ይገባዋል ብለው ለሚያምኑ ሰዎች ተፈጥሯል። እያንዳንዱ ስራ በጥንቃቄ ይዘጋጃል፣ ከዚያም ለመጀመሪያው ፎቶ ጥልቀት፣ ግልጽነት እና ዘላቂነት የሚሰጥ ብሩህ ገጽ ይሰጠዋል።",
       storyEyebrow: "የስቱዲዮ ታሪክ",
       storyTitle: "የግል ትዝታዎች፣ በረጋ እና በእንክብካቤ የተወጣጡ",
       storyText:
