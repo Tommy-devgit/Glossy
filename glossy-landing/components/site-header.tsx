@@ -26,8 +26,8 @@ export function SiteHeader() {
   return (
     <header className="sticky top-0 z-50">
       <div className="section-wrap pt-4 md:pt-6">
-        <div className="paper-panel flex items-center justify-between rounded-full px-4 py-3 md:px-6">
-          <Link href="/" className="text-[2rem] text-[var(--foreground)] md:text-[2.35rem]">
+        <div className="paper-panel flex items-center justify-between rounded-full px-4 py-2.5 md:px-5">
+          <Link href="/" className="text-[1.85rem] text-[var(--foreground)] md:text-[2.1rem]">
             <BrandWordmark />
           </Link>
 
@@ -94,7 +94,7 @@ export function SiteHeader() {
               </button>
             </div>
 
-            <Link href="/contact" className="button-primary text-sm">
+            <Link href="/contact" className="button-primary button-compact text-sm">
               {copy.cta}
             </Link>
           </div>

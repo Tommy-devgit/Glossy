@@ -70,10 +70,10 @@ export function AboutPageContent() {
   return (
     <section className="section-wrap py-8 md:py-10">
       <Reveal>
-        <div className="paper-panel rounded-[2.5rem] px-6 py-10 md:px-10 md:py-14">
+        <div className="paper-panel rounded-[2rem] px-6 py-9 md:px-9 md:py-12">
           <p className="eyebrow">{copy.eyebrow}</p>
-          <h1 className="mt-4 max-w-4xl text-5xl md:text-7xl">{copy.title}</h1>
-          <p className="mt-6 max-w-3xl text-base leading-relaxed text-[var(--muted)] md:text-lg">{copy.intro}</p>
+          <h1 className="mt-4 max-w-4xl text-4xl md:text-5xl">{copy.title}</h1>
+          <p className="mt-5 max-w-3xl text-sm leading-relaxed text-[var(--muted)] md:text-base">{copy.intro}</p>
         </div>
       </Reveal>
 
@@ -82,7 +82,7 @@ export function AboutPageContent() {
           <section className="paper-panel rounded-[2rem] p-6 md:p-8">
             <div className="max-w-3xl">
               <p className="eyebrow">{copy.storyEyebrow}</p>
-              <h2 className="mt-3 text-4xl">{copy.storyTitle}</h2>
+              <h2 className="mt-3 text-3xl">{copy.storyTitle}</h2>
               <p className="mt-5 text-sm leading-relaxed text-[var(--muted)] md:text-base">{copy.storyText}</p>
             </div>
           </section>
@@ -95,7 +95,7 @@ export function AboutPageContent() {
               {offeringText.map((offering) => (
                 <article key={offering.title} className="paper-card rounded-[1.5rem] p-5">
                   <span className="label-chip">{offering.note}</span>
-                  <h2 className="mt-4 text-3xl">{offering.title}</h2>
+                  <h2 className="mt-4 text-2xl">{offering.title}</h2>
                   <p className="mt-4 text-sm leading-relaxed text-[var(--muted)]">{offering.description}</p>
                 </article>
               ))}
@@ -108,7 +108,7 @@ export function AboutPageContent() {
             <div className="flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
               <div>
                 <p className="eyebrow">{copy.pricingEyebrow}</p>
-                <h2 className="mt-3 text-4xl">{copy.pricingTitle}</h2>
+                <h2 className="mt-3 text-3xl">{copy.pricingTitle}</h2>
               </div>
               <p className="max-w-xl text-sm leading-relaxed text-[var(--muted)]">{copy.pricingText}</p>
             </div>
@@ -116,7 +116,7 @@ export function AboutPageContent() {
               {localizedPricing.map((tier) => (
                 <article key={tier.name} className="paper-card rounded-[1.5rem] p-5">
                   <p className="eyebrow">{tier.name}</p>
-                  <p className="mt-3 text-4xl">{tier.price}</p>
+                  <p className="mt-3 text-3xl">{tier.price}</p>
                   <p className="mt-3 text-sm leading-relaxed text-[var(--muted)]">{tier.description}</p>
                   <ul className="mt-5 space-y-2 text-sm text-[var(--soft-text)]">
                     {tier.features.map((feature) => (
@@ -135,8 +135,8 @@ export function AboutPageContent() {
             <div className="mt-5 grid gap-4 md:grid-cols-2 xl:grid-cols-4">
               {localizedProcess.map((step) => (
                 <article key={step.step} className="paper-card rounded-[1.5rem] p-5">
-                  <p className="text-5xl leading-none text-[color-mix(in_srgb,var(--foreground)_14%,transparent)]">{step.step}</p>
-                  <h2 className="mt-3 text-3xl">{step.title}</h2>
+                  <p className="text-4xl leading-none text-[color-mix(in_srgb,var(--foreground)_14%,transparent)]">{step.step}</p>
+                  <h2 className="mt-3 text-2xl">{step.title}</h2>
                   <p className="mt-4 text-sm leading-relaxed text-[var(--muted)]">{step.description}</p>
                 </article>
               ))}
@@ -148,7 +148,7 @@ export function AboutPageContent() {
           <section className="paper-panel rounded-[2rem] p-6 md:flex md:items-center md:justify-between md:gap-8 md:p-8">
             <div className="max-w-3xl">
               <p className="eyebrow">{copy.nextEyebrow}</p>
-              <h2 className="mt-3 text-4xl">{copy.nextTitle}</h2>
+              <h2 className="mt-3 text-3xl">{copy.nextTitle}</h2>
               <p className="mt-4 text-sm leading-relaxed text-[var(--muted)]">{copy.nextText}</p>
             </div>
             <Link href="/contact" className="button-primary mt-6 md:mt-0">

@@ -17,6 +17,7 @@ import pic16 from "@/assets/pic-16.jpg";
 import pic17 from "@/assets/pic-17.jpg";
 import pic18 from "@/assets/pic-18.jpg";
 import pic19 from "@/assets/pic-19.jpg";
+import type { StaticImageData } from "next/image";
 
 export type NavLink = {
   href: string;
@@ -30,12 +31,12 @@ export type StudioOffering = {
 };
 
 export type Artwork = {
-  id: number;
+  id: number | string;
   title: string;
   artist: string;
   category: "Traditional" | "Ordinary" | "Historical" | "Landscape";
   year: string;
-  image: typeof pic1;
+  image: StaticImageData | string;
 };
 
 export type ArtistProfile = {

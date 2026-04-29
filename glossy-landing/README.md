@@ -16,6 +16,34 @@ bun dev
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
+## Admin uploads
+
+The admin upload page is available at `/admin` and is not linked in the public navigation.
+
+Create `glossy-landing/.env.local`:
+
+```bash
+NEXT_PUBLIC_API_URL=http://localhost:4000
+```
+
+Create `server/.env` from `server/.env.example`, then set MongoDB, Cloudinary, and `ADMIN_KEY`.
+
+Run the API:
+
+```bash
+cd ../server
+npm run dev
+```
+
+Run the site:
+
+```bash
+cd ../glossy-landing
+npm run dev
+```
+
+Use the same `ADMIN_KEY` on `/admin` when uploading a title and photo. Uploaded pieces are appended to the gallery and loaded with pagination.
+
 You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
 
 This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.

@@ -31,16 +31,16 @@ export function SiteFooter() {
   ];
 
   return (
-    <footer className="section-wrap pb-10 pt-20 md:pb-14">
-      <div className="paper-panel rounded-[2rem] px-6 py-10 md:px-10 md:py-12">
+    <footer className="section-wrap pb-10 pt-16 md:pb-14">
+      <div className="paper-panel rounded-[1.5rem] px-6 py-9 md:px-9 md:py-10">
         <div className="grid gap-10 lg:grid-cols-[1.25fr_.75fr_.75fr_.75fr]">
           <div className="max-w-xl">
-            <div className="text-[2.8rem] text-[var(--foreground)] md:text-[3.2rem]">
+            <div className="text-[2.25rem] text-[var(--foreground)] md:text-[2.6rem]">
               <BrandWordmark />
             </div>
-            <h2 className="mt-3 text-3xl text-[var(--foreground)] md:text-4xl">{copy.headline}</h2>
+            <h2 className="mt-3 text-2xl text-[var(--foreground)] md:text-3xl">{copy.headline}</h2>
             <p className="mt-4 max-w-lg text-sm leading-relaxed text-[var(--muted)]">{copy.body}</p>
-            <div className="mt-6 flex flex-wrap items-center gap-3">
+            <div className="mt-6 flex flex-wrap items-center gap-2.5">
               {socialLinks.map((social) => {
                 const Icon = social.icon;
 
@@ -50,11 +50,11 @@ export function SiteFooter() {
                     href={social.href}
                     aria-label={social.name}
                     title={social.name}
-                    className="rounded-full border border-[var(--line)] bg-[var(--chip-surface)] p-3 text-[var(--soft-text)] hover:text-[var(--foreground)]"
+                    className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-[var(--line)] bg-[var(--chip-surface)] text-[var(--soft-text)] hover:-translate-y-0.5 hover:bg-[var(--foreground)] hover:text-[var(--background)]"
                     target="_blank"
                     rel="noreferrer"
                   >
-                    <Icon className="h-4 w-4" />
+                    <Icon className="h-[1.05rem] w-[1.05rem]" />
                   </a>
                 );
               })}
@@ -99,7 +99,7 @@ export function SiteFooter() {
 
         <div className="soft-divider mt-10" />
         <div className="mt-6 flex flex-col gap-3 text-sm text-[var(--soft-text)] md:flex-row md:items-center md:justify-between">
-          <p className="text-[2rem] text-[var(--foreground)]">
+          <p className="text-[1.7rem] text-[var(--foreground)]">
             <BrandWordmark />
           </p>
           <p>&copy; 2026 {copy.brand}. {copy.rights}</p>

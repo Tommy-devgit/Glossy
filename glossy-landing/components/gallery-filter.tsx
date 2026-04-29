@@ -2,23 +2,102 @@
 
 import { AnimatePresence, motion } from "framer-motion";
 import Image from "next/image";
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useSitePreferences } from "@/components/site-preferences-provider";
-import { galleryCategories, featuredWorks } from "@/lib/site-data";
+import { galleryCategories, featuredWorks, type Artwork } from "@/lib/site-data";
 import { translations } from "@/lib/translations";
+
+type ApiArtwork = {
+  _id: string;
+  title: string;
+  imageUrl: string;
+  category?: Artwork["category"];
+  createdAt?: string;
+};
+
+type WorksResponse = {
+  items: ApiArtwork[];
+  page: number;
+  pages: number;
+  total: number;
+};
+
+const API_URL = process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:4000";
+const PAGE_SIZE = 6;
 
 export function GalleryFilter() {
   const [activeCategory, setActiveCategory] =
     useState<(typeof galleryCategories)[number]>("All");
+  const [uploadedWorks, setUploadedWorks] = useState<Artwork[]>([]);
+  const [page, setPage] = useState(1);
+  const [pages, setPages] = useState(1);
+  const [isLoading, setIsLoading] = useState(false);
   const { locale } = useSitePreferences();
   const copy = translations[locale].gallery;
+
+  useEffect(() => {
+    let ignore = false;
+
+    async function loadWorks() {
+      setIsLoading(true);
+
+      try {
+        const response = await fetch(`${API_URL}/api/works?page=${page}&limit=${PAGE_SIZE}`);
+
+        if (!response.ok) {
+          throw new Error("Unable to load uploaded works");
+        }
+
+        const data = (await response.json()) as WorksResponse;
+
+        if (ignore) {
+          return;
+        }
+
+        setPages(data.pages || 1);
+        setUploadedWorks((current) => {
+          const nextWorks = data.items.map((item) => ({
+            id: item._id,
+            title: item.title,
+            artist: "glossy upload",
+            category: item.category ?? "Ordinary",
+            year: item.createdAt ? new Date(item.createdAt).getFullYear().toString() : "New",
+            image: item.imageUrl,
+          }));
+
+          if (page === 1) {
+            return nextWorks;
+          }
+
+          const seen = new Set(current.map((item) => item.id));
+          return [...current, ...nextWorks.filter((item) => !seen.has(item.id))];
+        });
+      } catch {
+        if (!ignore && page === 1) {
+          setUploadedWorks([]);
+        }
+      } finally {
+        if (!ignore) {
+          setIsLoading(false);
+        }
+      }
+    }
+
+    loadWorks();
+
+    return () => {
+      ignore = true;
+    };
+  }, [page]);
+
+  const galleryItems = useMemo(() => [...featuredWorks, ...uploadedWorks], [uploadedWorks]);
 
   const filteredItems = useMemo(
     () =>
       activeCategory === "All"
-        ? featuredWorks
-        : featuredWorks.filter((item) => item.category === activeCategory),
-    [activeCategory],
+        ? galleryItems
+        : galleryItems.filter((item) => item.category === activeCategory),
+    [activeCategory, galleryItems],
   );
 
   return (
@@ -60,12 +139,13 @@ export function GalleryFilter() {
               transition={{ duration: 0.28 }}
               className="paper-card overflow-hidden rounded-[1.6rem] p-3"
             >
-              <div className="art-frame h-80">
+              <div className="art-frame h-72">
                 <Image
                   src={item.image}
                   alt={item.title}
                   width={900}
                   height={1125}
+                  unoptimized={typeof item.image === "string"}
                   className="h-full rounded-[1rem] w-full object-cover"
                 />
               </div>
@@ -91,6 +171,19 @@ export function GalleryFilter() {
           ))}
         </AnimatePresence>
       </motion.div>
+
+      {page < pages ? (
+        <div className="flex justify-center">
+          <button
+            type="button"
+            className="button-secondary"
+            disabled={isLoading}
+            onClick={() => setPage((value) => value + 1)}
+          >
+            {isLoading ? "Loading..." : "View more"}
+          </button>
+        </div>
+      ) : null}
     </section>
   );
 }

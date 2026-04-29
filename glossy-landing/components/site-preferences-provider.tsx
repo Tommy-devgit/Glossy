@@ -26,35 +26,47 @@ const STORAGE_THEME_KEY = "glossy-theme";
 const STORAGE_LOCALE_KEY = "glossy-locale";
 
 export function SitePreferencesProvider({ children }: { children: ReactNode }) {
-  const [theme, setTheme] = useState<Theme>(() => {
-    if (typeof window === "undefined") {
-      return "light";
-    }
-
-    const storedTheme = window.localStorage.getItem(STORAGE_THEME_KEY);
-    return storedTheme === "dark" || storedTheme === "light" ? storedTheme : "light";
-  });
-  const [locale, setLocale] = useState<Locale>(() => {
-    if (typeof window === "undefined") {
-      return "en";
-    }
-
-    const storedLocale = window.localStorage.getItem(STORAGE_LOCALE_KEY);
-    return storedLocale === "am" || storedLocale === "en" ? storedLocale : "en";
-  });
+  const [theme, setTheme] = useState<Theme>("light");
+  const [locale, setLocale] = useState<Locale>("en");
+  const [preferencesLoaded, setPreferencesLoaded] = useState(false);
 
   useEffect(() => {
+    queueMicrotask(() => {
+      const storedTheme = window.localStorage.getItem(STORAGE_THEME_KEY);
+      const storedLocale = window.localStorage.getItem(STORAGE_LOCALE_KEY);
+
+      if (storedTheme === "dark" || storedTheme === "light") {
+        setTheme(storedTheme);
+      }
+
+      if (storedLocale === "am" || storedLocale === "en") {
+        setLocale(storedLocale);
+      }
+
+      setPreferencesLoaded(true);
+    });
+  }, []);
+
+  useEffect(() => {
+    if (!preferencesLoaded) {
+      return;
+    }
+
     document.documentElement.dataset.theme = theme;
     document.documentElement.classList.toggle("dark", theme === "dark");
     document.body.dataset.theme = theme;
     document.body.classList.toggle("dark", theme === "dark");
     window.localStorage.setItem(STORAGE_THEME_KEY, theme);
-  }, [theme]);
+  }, [preferencesLoaded, theme]);
 
   useEffect(() => {
+    if (!preferencesLoaded) {
+      return;
+    }
+
     document.documentElement.lang = locale === "am" ? "am" : "en";
     window.localStorage.setItem(STORAGE_LOCALE_KEY, locale);
-  }, [locale]);
+  }, [locale, preferencesLoaded]);
 
   return (
     <SitePreferencesContext.Provider

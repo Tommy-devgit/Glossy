@@ -82,8 +82,8 @@ h2,
 h3,
 h4 {
   font-family: "Iowan Old Style", "Palatino Linotype", "Book Antiqua", Georgia, serif;
-  letter-spacing: -0.03em;
-  line-height: 0.96;
+  letter-spacing: 0;
+  line-height: 1.08;
 }
 
 .font-brand {
@@ -104,7 +104,7 @@ button {
 .section-wrap {
   margin-inline: auto;
   width: 100%;
-  max-width: 80rem;
+  max-width: 74rem;
   padding-inline: 1.25rem;
 }
 
@@ -133,6 +133,10 @@ button {
   font-size: 0.92rem;
   font-weight: 600;
   color: var(--background);
+}
+
+.button-compact {
+  padding: 0.6rem 1.05rem;
 }
 
 .button-primary:hover {
