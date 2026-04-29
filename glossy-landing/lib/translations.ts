@@ -113,7 +113,7 @@ export const translations: Record<Locale, Translations> = {
       about: "About",
       gallery: "Gallery",
       contact: "Contact",
-      cta: "Begin Your Piece",
+      cta: "Order Now",
       menu: "Menu",
       themeLight: "Light",
       themeDark: "Dark",
@@ -137,7 +137,7 @@ export const translations: Record<Locale, Translations> = {
       headline: "Your Memories, Finished as Art",
       subtext:
         "glossy transforms cherished photographs into handcrafted statement pieces, sealed beneath a luminous, glass-like surface designed to endure.",
-      primaryCta: "Begin Your Piece",
+      primaryCta: "Order Now",
       secondaryCta: "View the Gallery",
       heroBadge: "Handcrafted finish",
       heroCardTitle: "Depth, clarity, and quiet presence",
@@ -163,7 +163,7 @@ export const translations: Record<Locale, Translations> = {
       ctaEyebrow: "Commission",
       ctaTitle: "Preserve what matters beautifully",
       ctaText: "Commission a piece that gives your most meaningful photograph the presence of lasting art.",
-      ctaButton: "Begin Your Piece",
+      ctaButton: "Order Now",
     },
     about: {
       eyebrow: "About glossy",
@@ -183,7 +183,7 @@ export const translations: Record<Locale, Translations> = {
       nextTitle: "Begin with a photograph that matters, and we will guide the rest.",
       nextText:
         "Share your image and a little context, and the studio will respond with the most suitable direction for the piece you have in mind.",
-      nextButton: "Begin Your Piece",
+      nextButton: "Order Now",
     },
     gallery: {
       eyebrow: "Gallery",
@@ -204,7 +204,7 @@ export const translations: Record<Locale, Translations> = {
       title: "Begin with the image you would like to keep beautifully close.",
       intro:
         "Whether it is a portrait, a family photograph, or a defining occasion, we will help shape it into a piece made to last.",
-      formEyebrow: "Begin Your Piece",
+      formEyebrow: "Order Now",
       formTitle: "Tell us about the photograph you would like to preserve",
       formText: "Share the image, occasion, or setting in mind, and we will respond with a considered recommendation.",
       name: "Name",
@@ -229,7 +229,7 @@ export const translations: Record<Locale, Translations> = {
       about: "ስለ እኛ",
       gallery: "ማዕከለ-ስዕላት",
       contact: "ያነጋግሩን",
-      cta: "ስራዎን ያስጀምሩ",
+      cta: "Order Now",
       menu: "ምናሌ",
       themeLight: "ብርሃን",
       themeDark: "ጨለማ",
@@ -253,7 +253,7 @@ export const translations: Record<Locale, Translations> = {
       headline: "ትዝታዎችዎ፣ እንደ ስነ ጥበብ የተጠናቀቁ",
       subtext:
         "glossy የምትወዷቸውን ፎቶዎች ወደ በእጅ የተሠሩ የክብር ስራዎች ይለውጣል፤ በብሩህ እና እንደ መስታወት የሚያንጸባርቅ ገጽ ስር ተጠብቀው ለረጅም ጊዜ እንዲቆዩ ይደረጋሉ።",
-      primaryCta: "ስራዎን ያስጀምሩ",
+      primaryCta: "Order Now",
       secondaryCta: "ማዕከለ-ስዕላቱን ይመልከቱ",
       heroBadge: "በእጅ የተጠናቀቀ",
       heroCardTitle: "ጥልቀት፣ ግልጽነት እና የተረጋጋ ክብር",
@@ -279,7 +279,7 @@ export const translations: Record<Locale, Translations> = {
       ctaEyebrow: "ኮሚሽን",
       ctaTitle: "ዋጋ ያለውን ነገር በውበት ያስቀምጡ",
       ctaText: "ከሁሉ በላይ የሚያስታውሱትን ፎቶ ወደ ዘላቂ የስነ ጥበብ ክብር የሚያደርስ ስራ ያዝዙ።",
-      ctaButton: "ስራዎን ያስጀምሩ",
+      ctaButton: "Order Now",
     },
     about: {
       eyebrow: "ስለ glossy",
@@ -299,7 +299,7 @@ export const translations: Record<Locale, Translations> = {
       nextTitle: "ትርጉም ያለውን ፎቶ ይጀምሩ፣ የቀረውን እኛ እንመራዎታለን።",
       nextText:
         "ምስልዎን እና ትንሽ አውድ ያጋሩ፣ ከዚያ ለታሰበው ስራ ተስማሚውን አቅጣጫ እንመልስልዎታለን።",
-      nextButton: "ስራዎን ያስጀምሩ",
+      nextButton: "Order Now",
     },
     gallery: {
       eyebrow: "ማዕከለ-ስዕላት",
@@ -320,7 +320,7 @@ export const translations: Record<Locale, Translations> = {
       title: "በውበት በቅርብ ሊቆይ የሚገባውን ምስል ይጀምሩ።",
       intro:
         "ፖርትሬት ይሁን፣ የቤተሰብ ፎቶ ወይም ታላቅ አጋጣሚ፣ ወደ ዘላቂ ስራ እንዲቀየር እንረዳዎታለን።",
-      formEyebrow: "ስራዎን ያስጀምሩ",
+      formEyebrow: "Order Now",
       formTitle: "ማስቀመጥ ስለሚፈልጉት ፎቶ ያስታውቁን",
       formText: "ያስቡትን ምስል፣ አጋጣሚ ወይም አቀራረብ ያጋሩ፣ እኛም በተመጣጣኝ ምክር እንመልስልዎታለን።",
       name: "ስም",

@@ -3,28 +3,21 @@
 import { ChangeEvent, FormEvent, useEffect, useRef, useState } from "react";
 
 type UploadState = "idle" | "saving" | "saved" | "error";
+type GateState = "idle" | "checking" | "unlocked" | "error";
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:4000";
-const STORAGE_KEY = "glossy-admin-key";
 
 export function AdminDashboard() {
   const [adminKey, setAdminKey] = useState("");
+  const [password, setPassword] = useState("");
+  const [gateState, setGateState] = useState<GateState>("idle");
+  const [gateMessage, setGateMessage] = useState("");
   const [title, setTitle] = useState("");
   const [photo, setPhoto] = useState<File | null>(null);
   const [preview, setPreview] = useState<string | null>(null);
   const [status, setStatus] = useState<UploadState>("idle");
   const [message, setMessage] = useState("");
   const previewUrlRef = useRef<string | null>(null);
-
-  useEffect(() => {
-    queueMicrotask(() => {
-      const storedKey = window.localStorage.getItem(STORAGE_KEY);
-
-      if (storedKey) {
-        setAdminKey(storedKey);
-      }
-    });
-  }, []);
 
   useEffect(() => {
     return () => {
@@ -50,6 +43,42 @@ export function AdminDashboard() {
       setPreview(objectUrl);
     } else {
       setPreview(null);
+    }
+  }
+
+  async function handleUnlock(event: FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+
+    if (!password) {
+      setGateState("error");
+      setGateMessage("Enter the admin password.");
+      return;
+    }
+
+    setGateState("checking");
+    setGateMessage("Checking access...");
+
+    try {
+      const response = await fetch(`${API_URL}/api/admin/verify`, {
+        method: "POST",
+        headers: {
+          "x-admin-key": password,
+        },
+      });
+
+      if (!response.ok) {
+        const data = (await response.json().catch(() => null)) as { message?: string } | null;
+        throw new Error(data?.message ?? "Invalid password");
+      }
+
+      setAdminKey(password);
+      setPassword("");
+      setGateState("unlocked");
+      setGateMessage("");
+    } catch (error) {
+      setAdminKey("");
+      setGateState("error");
+      setGateMessage(error instanceof Error ? error.message : "Invalid password");
     }
   }
 
@@ -83,7 +112,6 @@ export function AdminDashboard() {
         throw new Error(data?.message ?? "Upload failed");
       }
 
-      window.localStorage.setItem(STORAGE_KEY, adminKey);
       setTitle("");
       setPhoto(null);
       if (previewUrlRef.current) {
@@ -105,25 +133,46 @@ export function AdminDashboard() {
         <p className="eyebrow">Admin</p>
         <h1 className="mt-4 max-w-3xl text-4xl md:text-5xl">Upload a new finished piece</h1>
         <p className="mt-5 max-w-2xl text-sm leading-relaxed text-[var(--muted)] md:text-base">
-          This page is not linked in the public navigation. Uploads require the private admin key and are stored through the backend.
+          This page is locked. Enter the admin password to upload finished pieces to the gallery.
         </p>
       </div>
 
-      <div className="mt-8 grid gap-6 lg:grid-cols-[.95fr_1.05fr]">
-        <form className="paper-panel rounded-[1.5rem] p-6 md:p-7" onSubmit={handleSubmit}>
-          <div className="grid gap-5">
-            <label className="grid gap-2 text-sm font-medium text-[var(--foreground)]">
-              Admin key
+      {gateState !== "unlocked" ? (
+        <div className="fixed inset-0 z-[80] flex items-center justify-center bg-black/45 px-4 backdrop-blur-sm">
+          <form className="paper-panel w-full max-w-md rounded-[1.5rem] p-6 shadow-2xl" onSubmit={handleUnlock}>
+            <p className="eyebrow">Private access</p>
+            <h2 className="mt-3 text-3xl">Admin password</h2>
+            <p className="mt-3 text-sm leading-relaxed text-[var(--muted)]">
+              Enter the private key to open the upload dashboard.
+            </p>
+            <label className="mt-5 grid gap-2 text-sm font-medium text-[var(--foreground)]">
+              Password
               <input
                 className="input-field"
                 type="password"
-                value={adminKey}
+                value={password}
                 autoComplete="current-password"
-                onChange={(event) => setAdminKey(event.target.value)}
-                placeholder="Private upload key"
+                autoFocus
+                onChange={(event) => setPassword(event.target.value)}
+                placeholder="Admin password"
               />
             </label>
+            <button type="submit" className="button-primary mt-5 w-full" disabled={gateState === "checking"}>
+              {gateState === "checking" ? "Checking..." : "Unlock dashboard"}
+            </button>
+            {gateMessage ? (
+              <p className={`mt-4 text-sm ${gateState === "error" ? "text-red-600" : "text-[var(--muted)]"}`}>
+                {gateMessage}
+              </p>
+            ) : null}
+          </form>
+        </div>
+      ) : null}
 
+      {gateState === "unlocked" ? (
+      <div className="mt-8 grid gap-6 lg:grid-cols-[.95fr_1.05fr]">
+        <form className="paper-panel rounded-[1.5rem] p-6 md:p-7" onSubmit={handleSubmit}>
+          <div className="grid gap-5">
             <label className="grid gap-2 text-sm font-medium text-[var(--foreground)]">
               Artwork title
               <input
@@ -177,6 +226,7 @@ export function AdminDashboard() {
           </div>
         </div>
       </div>
+      ) : null}
     </section>
   );
 }

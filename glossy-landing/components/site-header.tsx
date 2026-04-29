@@ -6,7 +6,7 @@ import { useState } from "react";
 import { BrandWordmark } from "@/components/brand-wordmark";
 import { MoonIcon, SunIcon } from "@/components/site-icons";
 import { useSitePreferences } from "@/components/site-preferences-provider";
-import { navigationLinks } from "@/lib/site-data";
+import { navigationLinks, telegramOrderUrl } from "@/lib/site-data";
 import { translations } from "@/lib/translations";
 
 export function SiteHeader() {
@@ -27,8 +27,8 @@ export function SiteHeader() {
     <header className="sticky top-0 z-50">
       <div className="section-wrap pt-4 md:pt-6">
         <div className="paper-panel flex items-center justify-between rounded-full px-4 py-2.5 md:px-5">
-          <Link href="/" className="text-[1.85rem] text-[var(--foreground)] md:text-[2.1rem]">
-            <BrandWordmark />
+          <Link href="/" className="inline-flex h-10 items-center text-[1.85rem] text-[var(--foreground)] md:text-[2.1rem]">
+            <BrandWordmark className="-translate-y-[0.16em]" />
           </Link>
 
           <nav className="hidden items-center gap-1 rounded-full border border-[var(--line)] bg-[var(--nav-surface)] p-1 md:flex">
@@ -94,9 +94,9 @@ export function SiteHeader() {
               </button>
             </div>
 
-            <Link href="/contact" className="button-primary button-compact text-sm">
+            <a href={telegramOrderUrl} className="button-primary button-compact text-sm" target="_blank" rel="noreferrer">
               {copy.cta}
-            </Link>
+            </a>
           </div>
 
           <button
@@ -173,9 +173,15 @@ export function SiteHeader() {
               </div>
             </div>
 
-            <Link href="/contact" className="button-primary mt-2" onClick={() => setMenuOpen(false)}>
+            <a
+              href={telegramOrderUrl}
+              className="button-primary mt-2"
+              target="_blank"
+              rel="noreferrer"
+              onClick={() => setMenuOpen(false)}
+            >
               {copy.cta}
-            </Link>
+            </a>
           </nav>
         ) : null}
       </div>

@@ -4,7 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { Reveal } from "@/components/reveal";
 import { useSitePreferences } from "@/components/site-preferences-provider";
-import { artistProfiles, featuredWorks, homeFeatureImages, testimonials } from "@/lib/site-data";
+import { artistProfiles, featuredWorks, homeFeatureImages, telegramOrderUrl, testimonials } from "@/lib/site-data";
 import { translations } from "@/lib/translations";
 
 const portraitWorks = featuredWorks.slice(0, 4);
@@ -111,9 +111,9 @@ export function HomePageContent() {
                 </div>
 
                 <div className="flex flex-wrap gap-3">
-                  <Link href="/contact" className="button-primary">
+                  <a href={telegramOrderUrl} className="button-primary" target="_blank" rel="noreferrer">
                     {copy.primaryCta}
-                  </Link>
+                  </a>
                   <Link
                     href="/gallery"
                     className="inline-flex items-center justify-center rounded-full border border-white/18 bg-white/10 px-5 py-3 text-sm text-[#f9f2ea] backdrop-blur"
@@ -265,9 +265,9 @@ export function HomePageContent() {
                 <h2 className="mt-3 text-3xl">{copy.ctaTitle}</h2>
                 <p className="mt-4 text-sm leading-relaxed text-[var(--muted)]">{copy.ctaText}</p>
               </div>
-              <Link href="/contact" className="button-primary mt-7 w-fit">
+              <a href={telegramOrderUrl} className="button-primary mt-7 w-fit" target="_blank" rel="noreferrer">
                 {copy.ctaButton}
-              </Link>
+              </a>
             </div>
           </Reveal>
         </div>

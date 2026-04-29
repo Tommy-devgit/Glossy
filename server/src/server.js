@@ -73,10 +73,14 @@ app.get("/health", (_request, response) => {
   response.json({ ok: true });
 });
 
+app.post("/api/admin/verify", requireAdminKey, (_request, response) => {
+  response.json({ ok: true });
+});
+
 app.get("/api/works", async (request, response, next) => {
   try {
     const page = Math.max(Number(request.query.page ?? 1), 1);
-    const limit = Math.min(Math.max(Number(request.query.limit ?? 6), 1), 24);
+    const limit = Math.min(Math.max(Number(request.query.limit ?? 6), 1), 100);
     const skip = (page - 1) * limit;
 
     const [items, total] = await Promise.all([

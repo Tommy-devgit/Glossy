@@ -1,9 +1,8 @@
 "use client";
 
-import Link from "next/link";
 import { Reveal } from "@/components/reveal";
 import { useSitePreferences } from "@/components/site-preferences-provider";
-import { pricingTiers, processSteps, studioOfferings } from "@/lib/site-data";
+import { pricingTiers, processSteps, studioOfferings, telegramOrderUrl } from "@/lib/site-data";
 import { translations } from "@/lib/translations";
 
 export function AboutPageContent() {
@@ -151,9 +150,9 @@ export function AboutPageContent() {
               <h2 className="mt-3 text-3xl">{copy.nextTitle}</h2>
               <p className="mt-4 text-sm leading-relaxed text-[var(--muted)]">{copy.nextText}</p>
             </div>
-            <Link href="/contact" className="button-primary mt-6 md:mt-0">
+            <a href={telegramOrderUrl} className="button-primary mt-6 md:mt-0" target="_blank" rel="noreferrer">
               {copy.nextButton}
-            </Link>
+            </a>
           </section>
         </Reveal>
       </div>

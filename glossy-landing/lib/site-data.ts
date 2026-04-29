@@ -72,6 +72,8 @@ export const navigationLinks: NavLink[] = [
   { href: "/contact", label: "Contact" },
 ];
 
+export const telegramOrderUrl = "https://t.me/glossy";
+
 export const studioOfferings: StudioOffering[] = [
   {
     title: "Portrait Pieces",
