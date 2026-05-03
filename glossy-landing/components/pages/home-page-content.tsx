@@ -97,6 +97,7 @@ export function HomePageContent() {
                 src={homeFeatureImages.hero}
                 alt="A refined portrait displayed in a warmly lit interior"
                 fill
+                sizes="(min-width: 1024px) 50vw, 100vw"
                 priority
                 className="object-cover"
               />
@@ -149,6 +150,7 @@ export function HomePageContent() {
                   src={homeFeatureImages.gallery}
                   alt="Close detail of a framed artwork in soft light"
                   fill
+                  sizes="(min-width: 1024px) 45vw, 100vw"
                   className="object-cover"
                 />
                 <div className="absolute inset-0 bg-black/35" />

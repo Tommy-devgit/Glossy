@@ -1,4 +1,5 @@
 # See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
 
 # dependencies
+/node_modules
 original-850eafb6d33db9548fd2d8aeb8d19a62.webp

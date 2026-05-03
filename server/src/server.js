@@ -18,6 +18,8 @@ const upload = multer({
 
 const port = Number(process.env.PORT ?? 4000);
 const clientOrigin = process.env.CLIENT_ORIGIN ?? "http://localhost:3000";
+const databaseTimeoutMs = Number(process.env.MONGODB_TIMEOUT_MS ?? 8000);
+let databaseConnectionPromise = null;
 
 cloudinary.config({
   cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
@@ -31,6 +33,52 @@ app.use(
   }),
 );
 app.use(express.json());
+
+function getDatabaseErrorMessage(error) {
+  if (error?.code === "ECONNREFUSED" && error?.syscall === "querySrv") {
+    return [
+      `DNS refused the MongoDB SRV lookup for ${error.hostname}.`,
+      "Check your DNS, VPN, firewall, or use a non-SRV mongodb:// seedlist URI.",
+    ].join(" ");
+  }
+
+  return error instanceof Error ? error.message : "Database connection failed";
+}
+
+async function connectToDatabase() {
+  if (mongoose.connection.readyState === 1) {
+    return;
+  }
+
+  if (!process.env.MONGODB_URI) {
+    throw new Error("MONGODB_URI is not configured");
+  }
+
+  databaseConnectionPromise ??= mongoose
+    .connect(process.env.MONGODB_URI, {
+      serverSelectionTimeoutMS: databaseTimeoutMs,
+    })
+    .then(() => {
+      console.log("MongoDB connected");
+    })
+    .catch((error) => {
+      databaseConnectionPromise = null;
+      throw error;
+    });
+
+  await databaseConnectionPromise;
+}
+
+async function requireDatabase(_request, response, next) {
+  try {
+    await connectToDatabase();
+    next();
+  } catch (error) {
+    const message = getDatabaseErrorMessage(error);
+    console.error(`MongoDB unavailable: ${message}`);
+    response.status(503).json({ message });
+  }
+}
 
 function requireAdminKey(request, response, next) {
   const expectedKey = process.env.ADMIN_KEY;
@@ -70,14 +118,17 @@ function uploadToCloudinary(fileBuffer) {
 }
 
 app.get("/health", (_request, response) => {
-  response.json({ ok: true });
+  response.json({
+    ok: true,
+    database: mongoose.connection.readyState === 1 ? "connected" : "disconnected",
+  });
 });
 
 app.post("/api/admin/verify", requireAdminKey, (_request, response) => {
   response.json({ ok: true });
 });
 
-app.get("/api/works", async (request, response, next) => {
+app.get("/api/works", requireDatabase, async (request, response, next) => {
   try {
     const page = Math.max(Number(request.query.page ?? 1), 1);
     const limit = Math.min(Math.max(Number(request.query.limit ?? 6), 1), 100);
@@ -99,7 +150,7 @@ app.get("/api/works", async (request, response, next) => {
   }
 });
 
-app.post("/api/works", requireAdminKey, upload.single("photo"), async (request, response, next) => {
+app.post("/api/works", requireAdminKey, requireDatabase, upload.single("photo"), async (request, response, next) => {
   try {
     const title = typeof request.body.title === "string" ? request.body.title.trim() : "";
 
@@ -134,11 +185,9 @@ app.use((error, _request, response, _next) => {
 });
 
 async function start() {
-  if (!process.env.MONGODB_URI) {
-    throw new Error("MONGODB_URI is not configured");
-  }
-
-  await mongoose.connect(process.env.MONGODB_URI);
+  connectToDatabase().catch((error) => {
+    console.error(`MongoDB startup connection failed: ${getDatabaseErrorMessage(error)}`);
+  });
 
   app.listen(port, () => {
     console.log(`Glossy API listening on http://localhost:${port}`);
