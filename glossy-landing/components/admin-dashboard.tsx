@@ -1,11 +1,10 @@
 "use client";
 
 import { ChangeEvent, FormEvent, useEffect, useRef, useState } from "react";
+import { API_URL, artworkCategories, type ArtworkCategory } from "@/lib/works";
 
 type UploadState = "idle" | "saving" | "saved" | "error";
 type GateState = "idle" | "checking" | "unlocked" | "error";
-
-const API_URL = process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:4000";
 
 export function AdminDashboard() {
   const [adminKey, setAdminKey] = useState("");
@@ -13,6 +12,7 @@ export function AdminDashboard() {
   const [gateState, setGateState] = useState<GateState>("idle");
   const [gateMessage, setGateMessage] = useState("");
   const [title, setTitle] = useState("");
+  const [category, setCategory] = useState<ArtworkCategory>("Ordinary");
   const [photo, setPhoto] = useState<File | null>(null);
   const [preview, setPreview] = useState<string | null>(null);
   const [status, setStatus] = useState<UploadState>("idle");
@@ -93,6 +93,7 @@ export function AdminDashboard() {
 
     const formData = new FormData();
     formData.append("title", title);
+    formData.append("category", category);
     formData.append("photo", photo);
 
     setStatus("saving");
@@ -113,6 +114,7 @@ export function AdminDashboard() {
       }
 
       setTitle("");
+      setCategory("Ordinary");
       setPhoto(null);
       if (previewUrlRef.current) {
         URL.revokeObjectURL(previewUrlRef.current);
@@ -120,7 +122,7 @@ export function AdminDashboard() {
       }
       setPreview(null);
       setStatus("saved");
-      setMessage("Saved. It will appear at the end of the gallery list.");
+      setMessage("Saved. It will appear in the gallery and home page.");
     } catch (error) {
       setStatus("error");
       setMessage(error instanceof Error ? error.message : "Upload failed");
@@ -184,6 +186,27 @@ export function AdminDashboard() {
             </label>
 
             <label className="grid gap-2 text-sm font-medium text-[var(--foreground)]">
+              Category
+              <select
+                className="input-field"
+                value={category}
+                onChange={(event) => setCategory(event.target.value as ArtworkCategory)}
+              >
+                {artworkCategories.map((item) => (
+                  <option key={item} value={item}>
+                    {item === "Traditional"
+                      ? "Portrait"
+                      : item === "Ordinary"
+                        ? "Milestone"
+                        : item === "Historical"
+                          ? "Statement"
+                          : "Scenic"}
+                  </option>
+                ))}
+              </select>
+            </label>
+
+            <label className="grid gap-2 text-sm font-medium text-[var(--foreground)]">
               Photo
               <input
                 className="input-field"
@@ -222,7 +245,9 @@ export function AdminDashboard() {
           </div>
           <div className="px-2 pb-2 pt-4">
             <h2 className="text-2xl">{title || "Artwork title"}</h2>
-            <p className="mt-2 text-sm text-[var(--muted)]">New gallery item preview</p>
+            <p className="mt-2 text-sm text-[var(--muted)]">
+              {new Intl.DateTimeFormat("en", { month: "short", year: "numeric" }).format(new Date())}
+            </p>
           </div>
         </div>
       </div>

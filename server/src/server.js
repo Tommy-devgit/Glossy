@@ -20,6 +20,7 @@ const upload = multer({
 const port = Number(process.env.PORT ?? 4000);
 const clientOrigin = process.env.CLIENT_ORIGIN ?? "http://localhost:3000";
 const databaseTimeoutMs = Number(process.env.MONGODB_TIMEOUT_MS ?? 8000);
+const workCategories = ["Traditional", "Ordinary", "Historical", "Landscape"];
 let databaseConnectionPromise = null;
 
 const dnsServers = process.env.DNS_SERVERS?.split(",")
@@ -146,7 +147,7 @@ app.get("/api/works", requireDatabase, async (request, response, next) => {
     const skip = (page - 1) * limit;
 
     const [items, total] = await Promise.all([
-      Work.find().sort({ createdAt: 1 }).skip(skip).limit(limit).lean(),
+      Work.find().sort({ createdAt: -1 }).skip(skip).limit(limit).lean(),
       Work.countDocuments(),
     ]);
 
@@ -164,6 +165,7 @@ app.get("/api/works", requireDatabase, async (request, response, next) => {
 app.post("/api/works", requireAdminKey, requireDatabase, upload.single("photo"), async (request, response, next) => {
   try {
     const title = typeof request.body.title === "string" ? request.body.title.trim() : "";
+    const category = workCategories.includes(request.body.category) ? request.body.category : "Ordinary";
 
     if (!title) {
       return response.status(400).json({ message: "Title is required" });
@@ -180,6 +182,7 @@ app.post("/api/works", requireAdminKey, requireDatabase, upload.single("photo"),
     const uploadResult = await uploadToCloudinary(request.file.buffer);
     const work = await Work.create({
       title,
+      category,
       imageUrl: uploadResult.secure_url,
       publicId: uploadResult.public_id,
     });

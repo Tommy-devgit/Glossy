@@ -73,7 +73,6 @@ type Translations = {
     eyebrow: string;
     title: string;
     intro: string;
-    itemNote: string;
     filters: {
       all: string;
       traditional: string;
@@ -190,7 +189,6 @@ export const translations: Record<Locale, Translations> = {
       title: "A selection of photographs reimagined as finished works.",
       intro:
         "Each piece is made to preserve the feeling of the original image while giving it greater depth, polish, and permanence.",
-      itemNote: "A polished study in depth, light, and lasting visual presence.",
       filters: {
         all: "All",
         traditional: "Portrait",
@@ -306,7 +304,6 @@ export const translations: Record<Locale, Translations> = {
       title: "ወደ የተጠናቀቁ ስራዎች የተቀየሩ ፎቶዎች ስብስብ።",
       intro:
         "እያንዳንዱ ስራ የመጀመሪያውን ምስል ስሜት ለማስጠበቅ ሲሠራ በተጨማሪም ጥልቀት፣ ውበት እና ዘላቂነት ይጨምርበታል።",
-      itemNote: "የጥልቀት፣ የብርሃን እና የዘላቂ ክብር የተጠራጠረ ጥናት።",
       filters: {
         all: "ሁሉም",
         traditional: "ፖርትሬት",

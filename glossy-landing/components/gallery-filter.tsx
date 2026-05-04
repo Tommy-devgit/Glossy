@@ -4,31 +4,19 @@ import { AnimatePresence, motion } from "framer-motion";
 import Image from "next/image";
 import { useEffect, useMemo, useState } from "react";
 import { useSitePreferences } from "@/components/site-preferences-provider";
-import { galleryCategories, featuredWorks, type Artwork } from "@/lib/site-data";
 import { translations } from "@/lib/translations";
+import { fetchWorks, galleryCategories, type Artwork } from "@/lib/works";
 
-type ApiArtwork = {
-  _id: string;
-  title: string;
-  imageUrl: string;
-  category?: Artwork["category"];
-  createdAt?: string;
-};
-
-type WorksResponse = {
-  items: ApiArtwork[];
-};
-
-const API_URL = process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:4000";
 const ITEMS_PER_PAGE = 6;
 const UPLOAD_FETCH_LIMIT = 100;
 
 export function GalleryFilter() {
   const [activeCategory, setActiveCategory] =
     useState<(typeof galleryCategories)[number]>("All");
-  const [uploadedWorks, setUploadedWorks] = useState<Artwork[]>([]);
+  const [galleryItems, setGalleryItems] = useState<Artwork[]>([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [isLoading, setIsLoading] = useState(false);
+  const [loadError, setLoadError] = useState("");
   const { locale } = useSitePreferences();
   const copy = translations[locale].gallery;
 
@@ -37,33 +25,20 @@ export function GalleryFilter() {
 
     async function loadWorks() {
       setIsLoading(true);
+      setLoadError("");
 
       try {
-        const response = await fetch(`${API_URL}/api/works?page=1&limit=${UPLOAD_FETCH_LIMIT}`);
-
-        if (!response.ok) {
-          throw new Error("Unable to load uploaded works");
-        }
-
-        const data = (await response.json()) as WorksResponse;
+        const works = await fetchWorks(UPLOAD_FETCH_LIMIT);
 
         if (ignore) {
           return;
         }
 
-        setUploadedWorks(
-          data.items.map((item) => ({
-            id: item._id,
-            title: item.title,
-            artist: "glossy upload",
-            category: item.category ?? "Ordinary",
-            year: item.createdAt ? new Date(item.createdAt).getFullYear().toString() : "New",
-            image: item.imageUrl,
-          })),
-        );
-      } catch {
+        setGalleryItems(works);
+      } catch (error) {
         if (!ignore) {
-          setUploadedWorks([]);
+          setGalleryItems([]);
+          setLoadError(error instanceof Error ? error.message : "Unable to load works");
         }
       } finally {
         if (!ignore) {
@@ -78,8 +53,6 @@ export function GalleryFilter() {
       ignore = true;
     };
   }, []);
-
-  const galleryItems = useMemo(() => [...featuredWorks, ...uploadedWorks], [uploadedWorks]);
 
   const filteredItems = useMemo(
     () =>
@@ -152,19 +125,9 @@ export function GalleryFilter() {
                 <div className="flex items-start justify-between gap-3">
                   <div>
                     <h3 className="text-2xl">{item.title}</h3>
-                    <p className="mt-2 text-xs uppercase tracking-[0.2em] text-[var(--soft-text-strong)]">{item.artist}</p>
+                    <p className="mt-2 text-sm text-[var(--muted)]">{item.date}</p>
                   </div>
-                  <span className="label-chip">
-                    {item.category === "Traditional"
-                      ? copy.filters.traditional
-                      : item.category === "Ordinary"
-                        ? copy.filters.ordinary
-                        : item.category === "Historical"
-                          ? copy.filters.historical
-                          : copy.filters.landscape}
-                  </span>
                 </div>
-                <p className="mt-4 text-sm text-[var(--muted)]">{copy.itemNote}</p>
               </div>
             </motion.article>
           ))}
@@ -208,6 +171,10 @@ export function GalleryFilter() {
       ) : null}
 
       {isLoading ? <p className="text-center text-sm text-[var(--muted)]">Loading gallery updates...</p> : null}
+      {!isLoading && loadError ? <p className="text-center text-sm text-red-600">{loadError}</p> : null}
+      {!isLoading && !loadError && filteredItems.length === 0 ? (
+        <p className="text-center text-sm text-[var(--muted)]">No gallery items yet.</p>
+      ) : null}
     </section>
   );
 }
