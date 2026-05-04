@@ -1,5 +1,6 @@
 import { v2 as cloudinary } from "cloudinary";
 import cors from "cors";
+import dns from "node:dns";
 import dotenv from "dotenv";
 import express from "express";
 import mongoose from "mongoose";
@@ -21,6 +22,14 @@ const clientOrigin = process.env.CLIENT_ORIGIN ?? "http://localhost:3000";
 const databaseTimeoutMs = Number(process.env.MONGODB_TIMEOUT_MS ?? 8000);
 let databaseConnectionPromise = null;
 
+const dnsServers = process.env.DNS_SERVERS?.split(",")
+  .map((server) => server.trim())
+  .filter(Boolean);
+
+if (dnsServers?.length) {
+  dns.setServers(dnsServers);
+}
+
 cloudinary.config({
   cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
   api_key: process.env.CLOUDINARY_API_KEY,
@@ -38,7 +47,9 @@ function getDatabaseErrorMessage(error) {
   if (error?.code === "ECONNREFUSED" && error?.syscall === "querySrv") {
     return [
       `DNS refused the MongoDB SRV lookup for ${error.hostname}.`,
-      "Check your DNS, VPN, firewall, or use a non-SRV mongodb:// seedlist URI.",
+      "Node.js cannot resolve your mongodb+srv:// URI through the current DNS path.",
+      "Set DNS_SERVERS=1.1.1.1,8.8.8.8 if those resolvers are reachable,",
+      "or replace MONGODB_URI with a non-SRV mongodb:// seedlist URI from MongoDB Atlas.",
     ].join(" ");
   }
 
