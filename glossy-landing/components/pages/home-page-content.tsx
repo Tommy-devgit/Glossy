@@ -47,11 +47,11 @@ function ArtworkStrip({
   works: Artwork[];
 }) {
   return (
-    <section className="paper-panel rounded-[1.5rem] p-5 md:p-7">
+    <section className="paper-panel rounded-[1.25rem] p-5 md:p-6">
       <div className="flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
         <div>
           <p className="eyebrow">{title}</p>
-          <h2 className="mt-2 text-2xl md:text-3xl">{title}</h2>
+          <h2 className="mt-2 text-xl md:text-2xl">{title}</h2>
         </div>
         <p className="max-w-xl text-sm leading-relaxed text-[var(--muted)]">{intro}</p>
       </div>
@@ -59,21 +59,26 @@ function ArtworkStrip({
       <div className="mt-6 grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
         {works.length ? (
           works.map((work) => (
-            <article key={work.id} className="paper-card overflow-hidden rounded-[1.5rem]">
-              <div className="art-frame h-56">
+            <article key={work.id} className="paper-card overflow-hidden rounded-[1.25rem]">
+              <div className="art-frame h-52 rounded-[1rem]">
                 <Image
                   src={work.image}
                   alt={work.title}
                   width={900}
                   height={1125}
                   unoptimized
-                  className="h-full w-full rounded-[1rem] object-cover"
+                  className="h-full w-full rounded-[0.8rem] object-cover"
                 />
               </div>
               <div className="px-4 pb-4 pt-3">
-                <div className="flex items-center justify-between gap-3">
-                  <p className="text-sm font-semibold text-[var(--foreground)]">{work.title}</p>
-                  <span className="label-chip">{work.date}</span>
+                <div className="flex items-start justify-between gap-3">
+                  <div className="min-w-0">
+                    <p className="truncate text-sm font-semibold text-[var(--foreground)]">{work.title}</p>
+                    <p className="mt-1 text-xs text-[var(--muted)]">{work.date}</p>
+                  </div>
+                  <a href={telegramOrderUrl} className="button-secondary shrink-0 px-3 py-2 text-xs" target="_blank" rel="noreferrer">
+                    Order Now
+                  </a>
                 </div>
               </div>
             </article>
@@ -123,12 +128,12 @@ export function HomePageContent() {
   }, []);
 
   const portraitWorks = useMemo(
-    () => works.filter((work) => work.category === "Traditional").slice(0, 4),
+    () => works.filter((work) => work.category === "Portrait").slice(0, 4),
     [works],
   );
-  const milestoneWorks = useMemo(() => works.filter((work) => work.category === "Ordinary").slice(0, 4), [works]);
+  const milestoneWorks = useMemo(() => works.filter((work) => work.category === "Wedding").slice(0, 4), [works]);
   const commissionWorks = useMemo(
-    () => works.filter((work) => work.category === "Historical" || work.category === "Landscape").slice(0, 4),
+    () => works.filter((work) => work.category === "Religious" || work.category === "Art").slice(0, 4),
     [works],
   );
   const fallbackSections = useMemo(
@@ -139,15 +144,15 @@ export function HomePageContent() {
   return (
     <>
       <section className="section-wrap pb-10 pt-8 md:pb-12 md:pt-10">
-        <div className="paper-panel overflow-hidden rounded-[2rem] px-5 py-5 md:px-7 md:py-7">
+        <div className="paper-panel overflow-hidden rounded-[1.5rem] px-4 py-4 md:px-6 md:py-6">
           <div className="grid gap-6 lg:grid-cols-[1.05fr_.95fr]">
-            <Reveal className="relative min-h-[28rem] overflow-hidden rounded-[1.5rem] lg:min-h-[34rem]">
+            <Reveal className="relative min-h-[25rem] overflow-hidden rounded-[1.25rem] lg:min-h-[30rem]">
               <FeaturedImage work={works[0]} alt={works[0]?.title ?? "Featured glossy artwork"} priority />
               <div className="absolute inset-0 bg-black/42" />
-              <div className="relative z-10 flex h-full flex-col justify-between p-6 text-[#f9f2ea] md:p-10">
+              <div className="relative z-10 flex h-full flex-col justify-between p-5 text-[#f9f2ea] md:p-8">
                 <div>
                   <p className="text-xs uppercase tracking-[0.24em] text-[#efe2d6]/72">{copy.eyebrow}</p>
-                  <h1 className="mt-4 max-w-3xl text-4xl md:text-6xl">{copy.headline}</h1>
+                  <h1 className="mt-4 max-w-3xl text-3xl md:text-5xl">{copy.headline}</h1>
                   <p className="mt-5 max-w-2xl text-sm leading-relaxed text-[#f4e7db]/84 md:text-base">
                     {copy.subtext}
                   </p>
@@ -168,9 +173,9 @@ export function HomePageContent() {
             </Reveal>
 
             <div className="grid gap-6">
-              <Reveal delay={0.08} className="paper-card rounded-[1.5rem] p-6 md:p-7">
+              <Reveal delay={0.08} className="paper-card rounded-[1.25rem] p-5 md:p-6">
                 <span className="label-chip">{copy.heroBadge}</span>
-                <h2 className="mt-5 text-3xl">{copy.heroCardTitle}</h2>
+                <h2 className="mt-4 text-2xl">{copy.heroCardTitle}</h2>
                 <p className="mt-4 text-sm leading-relaxed text-[var(--muted)] md:text-base">
                   {copy.heroCardText}
                 </p>
@@ -187,7 +192,7 @@ export function HomePageContent() {
                 </div>
               </Reveal>
 
-              <Reveal delay={0.16} className="relative min-h-[18rem] overflow-hidden rounded-[1.5rem]">
+              <Reveal delay={0.16} className="relative min-h-[16rem] overflow-hidden rounded-[1.25rem]">
                 <FeaturedImage work={works[1] ?? works[0]} alt={works[1]?.title ?? works[0]?.title ?? "Glossy artwork"} />
                 <div className="absolute inset-0 bg-black/35" />
                 <div className="absolute inset-x-0 bottom-0 p-6 text-[#f9f2ea]">
@@ -248,7 +253,7 @@ export function HomePageContent() {
         <Reveal>
           <div className="paper-panel rounded-[1.5rem] px-6 py-10 text-center md:px-14">
             <p className="eyebrow">{copy.galleryEyebrow}</p>
-            <h2 className="mt-4 text-3xl md:text-4xl">{copy.galleryTitle}</h2>
+            <h2 className="mt-4 text-2xl md:text-3xl">{copy.galleryTitle}</h2>
             <p className="mx-auto mt-5 max-w-3xl text-sm leading-relaxed text-[var(--muted)] md:text-base">
               {copy.galleryText}
             </p>

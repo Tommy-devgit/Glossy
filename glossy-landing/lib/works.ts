@@ -1,4 +1,4 @@
-export const artworkCategories = ["Traditional", "Ordinary", "Historical", "Landscape"] as const;
+export const artworkCategories = ["Religious", "Wedding", "Portrait", "Art"] as const;
 
 export const galleryCategories = ["All", ...artworkCategories] as const;
 
@@ -16,7 +16,7 @@ type ApiArtwork = {
   _id: string;
   title: string;
   imageUrl: string;
-  category?: ArtworkCategory;
+  category?: ArtworkCategory | "Traditional" | "Ordinary" | "Historical" | "Landscape";
   createdAt?: string;
 };
 
@@ -25,6 +25,29 @@ type WorksResponse = {
 };
 
 export const API_URL = process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:4000";
+
+const legacyCategoryMap: Record<string, ArtworkCategory> = {
+  Traditional: "Portrait",
+  Ordinary: "Wedding",
+  Historical: "Art",
+  Landscape: "Art",
+};
+
+export function normalizeArtworkCategory(category?: string): ArtworkCategory {
+  if (artworkCategories.includes(category as ArtworkCategory)) {
+    return category as ArtworkCategory;
+  }
+
+  return legacyCategoryMap[category ?? ""] ?? "Portrait";
+}
+
+function getOptimizedImageUrl(imageUrl: string) {
+  if (!imageUrl.includes("res.cloudinary.com") || imageUrl.includes("/f_auto,q_auto/")) {
+    return imageUrl;
+  }
+
+  return imageUrl.replace("/upload/", "/upload/f_auto,q_auto,c_limit,w_1400/");
+}
 
 export async function fetchWorks(limit = 100) {
   const response = await fetch(`${API_URL}/api/works?page=1&limit=${limit}`);
@@ -38,10 +61,10 @@ export async function fetchWorks(limit = 100) {
   return data.items.map((item) => ({
     id: item._id,
     title: item.title,
-    category: item.category ?? "Ordinary",
+    category: normalizeArtworkCategory(item.category),
     date: item.createdAt
       ? new Intl.DateTimeFormat("en", { month: "short", year: "numeric" }).format(new Date(item.createdAt))
       : "New",
-    image: item.imageUrl,
+    image: getOptimizedImageUrl(item.imageUrl),
   }));
 }

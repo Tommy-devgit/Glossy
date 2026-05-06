@@ -20,7 +20,13 @@ const upload = multer({
 const port = Number(process.env.PORT ?? 4000);
 const clientOrigin = process.env.CLIENT_ORIGIN ?? "http://localhost:3000";
 const databaseTimeoutMs = Number(process.env.MONGODB_TIMEOUT_MS ?? 8000);
-const workCategories = ["Traditional", "Ordinary", "Historical", "Landscape"];
+const workCategories = ["Religious", "Wedding", "Portrait", "Art"];
+const legacyCategoryMap = {
+  Traditional: "Portrait",
+  Ordinary: "Wedding",
+  Historical: "Art",
+  Landscape: "Art",
+};
 let databaseConnectionPromise = null;
 
 const dnsServers = process.env.DNS_SERVERS?.split(",")
@@ -147,12 +153,15 @@ app.get("/api/works", requireDatabase, async (request, response, next) => {
     const skip = (page - 1) * limit;
 
     const [items, total] = await Promise.all([
-      Work.find().sort({ createdAt: -1 }).skip(skip).limit(limit).lean(),
+      Work.find().select("title category imageUrl createdAt").sort({ createdAt: -1 }).skip(skip).limit(limit).lean(),
       Work.countDocuments(),
     ]);
 
     response.json({
-      items,
+      items: items.map((item) => ({
+        ...item,
+        category: legacyCategoryMap[item.category] ?? item.category,
+      })),
       page,
       pages: Math.max(Math.ceil(total / limit), 1),
       total,
@@ -165,7 +174,7 @@ app.get("/api/works", requireDatabase, async (request, response, next) => {
 app.post("/api/works", requireAdminKey, requireDatabase, upload.single("photo"), async (request, response, next) => {
   try {
     const title = typeof request.body.title === "string" ? request.body.title.trim() : "";
-    const category = workCategories.includes(request.body.category) ? request.body.category : "Ordinary";
+    const category = workCategories.includes(request.body.category) ? request.body.category : "Portrait";
 
     if (!title) {
       return response.status(400).json({ message: "Title is required" });
@@ -188,6 +197,68 @@ app.post("/api/works", requireAdminKey, requireDatabase, upload.single("photo"),
     });
 
     return response.status(201).json({ item: work });
+  } catch (error) {
+    return next(error);
+  }
+});
+
+app.patch("/api/works/:id", requireAdminKey, requireDatabase, upload.single("photo"), async (request, response, next) => {
+  try {
+    const work = await Work.findById(request.params.id);
+
+    if (!work) {
+      return response.status(404).json({ message: "Work not found" });
+    }
+
+    const title = typeof request.body.title === "string" ? request.body.title.trim() : "";
+    const category = workCategories.includes(request.body.category) ? request.body.category : work.category;
+    let previousPublicId = null;
+
+    if (!title) {
+      return response.status(400).json({ message: "Title is required" });
+    }
+
+    work.title = title;
+    work.category = category;
+
+    if (request.file) {
+      if (!request.file.mimetype.startsWith("image/")) {
+        return response.status(400).json({ message: "Upload an image file" });
+      }
+
+      const uploadResult = await uploadToCloudinary(request.file.buffer);
+      previousPublicId = work.publicId;
+      work.imageUrl = uploadResult.secure_url;
+      work.publicId = uploadResult.public_id;
+    }
+
+    await work.save();
+
+    if (previousPublicId) {
+      cloudinary.uploader.destroy(previousPublicId).catch((error) => {
+        console.error(`Cloudinary cleanup failed for ${previousPublicId}:`, error);
+      });
+    }
+
+    return response.json({ item: work });
+  } catch (error) {
+    return next(error);
+  }
+});
+
+app.delete("/api/works/:id", requireAdminKey, requireDatabase, async (request, response, next) => {
+  try {
+    const work = await Work.findByIdAndDelete(request.params.id);
+
+    if (!work) {
+      return response.status(404).json({ message: "Work not found" });
+    }
+
+    cloudinary.uploader.destroy(work.publicId).catch((error) => {
+      console.error(`Cloudinary cleanup failed for ${work.publicId}:`, error);
+    });
+
+    return response.json({ ok: true });
   } catch (error) {
     return next(error);
   }

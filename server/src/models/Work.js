@@ -18,8 +18,8 @@ const workSchema = new mongoose.Schema(
     },
     category: {
       type: String,
-      enum: ["Traditional", "Ordinary", "Historical", "Landscape"],
-      default: "Ordinary",
+      enum: ["Religious", "Wedding", "Portrait", "Art", "Traditional", "Ordinary", "Historical", "Landscape"],
+      default: "Portrait",
     },
   },
   { timestamps: true },

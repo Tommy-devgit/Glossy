@@ -75,10 +75,10 @@ type Translations = {
     intro: string;
     filters: {
       all: string;
-      traditional: string;
-      ordinary: string;
-      historical: string;
-      landscape: string;
+      religious: string;
+      wedding: string;
+      portrait: string;
+      art: string;
     };
   };
   contact: {
@@ -191,10 +191,10 @@ export const translations: Record<Locale, Translations> = {
         "Each piece is made to preserve the feeling of the original image while giving it greater depth, polish, and permanence.",
       filters: {
         all: "All",
-        traditional: "Portrait",
-        ordinary: "Milestone",
-        historical: "Statement",
-        landscape: "Scenic",
+        religious: "Religious",
+        wedding: "Wedding",
+        portrait: "Portrait",
+        art: "Art",
       },
     },
     contact: {
@@ -306,10 +306,10 @@ export const translations: Record<Locale, Translations> = {
         "እያንዳንዱ ስራ የመጀመሪያውን ምስል ስሜት ለማስጠበቅ ሲሠራ በተጨማሪም ጥልቀት፣ ውበት እና ዘላቂነት ይጨምርበታል።",
       filters: {
         all: "ሁሉም",
-        traditional: "ፖርትሬት",
-        ordinary: "ልዩ አጋጣሚ",
-        historical: "የክብር ስራ",
-        landscape: "ተፈጥሯዊ",
+        religious: "Religious",
+        wedding: "Wedding",
+        portrait: "Portrait",
+        art: "Art",
       },
     },
     contact: {
