@@ -16,9 +16,9 @@ export function ContactForm() {
 
   return (
     <div className="grid gap-6 lg:grid-cols-[1.05fr_.95fr]">
-      <form className="paper-card rounded-[1.8rem] p-6 md:p-8" onSubmit={handleSubmit}>
+      <form className="paper-card rounded-[1.25rem] p-5 md:p-6" onSubmit={handleSubmit}>
         <p className="eyebrow">{copy.formEyebrow}</p>
-        <h2 className="mt-3 text-4xl">{copy.formTitle}</h2>
+        <h2 className="mt-3 text-2xl md:text-3xl">{copy.formTitle}</h2>
         <p className="mt-3 text-sm leading-relaxed text-[var(--muted)]">{copy.formText}</p>
 
         <div className="mt-6 grid gap-4">
@@ -50,15 +50,15 @@ export function ContactForm() {
       </form>
 
       <aside className="grid gap-5">
-        <div className="paper-card rounded-[1.8rem] p-6">
+        <div className="paper-card rounded-[1.25rem] p-5">
           <p className="eyebrow">{copy.consultationsEyebrow}</p>
-          <h3 className="mt-3 text-3xl">{copy.consultationsTitle}</h3>
+          <h3 className="mt-3 text-2xl">{copy.consultationsTitle}</h3>
           <p className="mt-3 text-sm leading-relaxed text-[var(--muted)]">{copy.consultationsText}</p>
         </div>
 
-        <div className="paper-card rounded-[1.8rem] p-6">
+        <div className="paper-card rounded-[1.25rem] p-5">
           <p className="eyebrow">{copy.emailEyebrow}</p>
-          <h3 className="mt-3 text-3xl">hello@glossyatelier.com</h3>
+          <h3 className="mt-3 text-xl md:text-2xl">hello@glossyatelier.com</h3>
           <p className="mt-3 text-sm leading-relaxed text-[var(--muted)]">{copy.emailText}</p>
           <a
             className="button-secondary mt-5"

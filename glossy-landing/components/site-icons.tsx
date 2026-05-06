@@ -31,6 +31,16 @@ export function MoonIcon({ className }: IconProps) {
   );
 }
 
+export function AdminIcon({ className }: IconProps) {
+  return (
+    <svg aria-hidden="true" {...iconProps(className)}>
+      <rect x="4" y="10" width="16" height="10" rx="2.2" />
+      <path d="M8 10V7.8a4 4 0 0 1 8 0V10" />
+      <path d="M12 14.4v1.8" />
+    </svg>
+  );
+}
+
 export function InstagramIcon({ className }: IconProps) {
   return (
     <svg aria-hidden="true" {...iconProps(className)}>

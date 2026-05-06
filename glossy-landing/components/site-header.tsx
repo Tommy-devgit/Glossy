@@ -4,7 +4,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState } from "react";
 import { BrandWordmark } from "@/components/brand-wordmark";
-import { MoonIcon, SunIcon } from "@/components/site-icons";
+import { AdminIcon, MoonIcon, SunIcon } from "@/components/site-icons";
 import { useSitePreferences } from "@/components/site-preferences-provider";
 import { navigationLinks, telegramOrderUrl } from "@/lib/site-data";
 import { translations } from "@/lib/translations";
@@ -26,8 +26,8 @@ export function SiteHeader() {
   return (
     <header className="sticky top-0 z-50">
       <div className="section-wrap pt-4 md:pt-6">
-        <div className="paper-panel flex items-center justify-between rounded-full px-4 py-2.5 md:px-5">
-          <Link href="/" className="inline-flex h-10 items-center text-[1.85rem] text-[var(--foreground)] md:text-[2.1rem]">
+        <div className="paper-panel flex items-center justify-between rounded-full px-3 py-2 md:px-4">
+          <Link href="/" className="inline-flex h-9 items-center text-[1.65rem] text-[var(--foreground)] md:text-[1.9rem]">
             <BrandWordmark className="-translate-y-[0.16em]" />
           </Link>
 
@@ -36,7 +36,7 @@ export function SiteHeader() {
               <Link
                 key={link.href}
                 href={link.href}
-                className={`rounded-full px-4 py-2 text-sm ${
+                className={`rounded-full px-3.5 py-1.5 text-[0.82rem] ${
                   isActive(link.href)
                     ? "bg-[var(--foreground)] text-[var(--background)]"
                     : "text-[var(--soft-text)] hover:bg-[var(--chip-surface)] hover:text-[var(--foreground)]"
@@ -53,7 +53,7 @@ export function SiteHeader() {
                 type="button"
                 aria-label={copy.themeLight}
                 title={copy.themeLight}
-                className={`rounded-full p-2.5 ${
+                  className={`rounded-full p-2 ${
                   theme === "light" ? "bg-[var(--foreground)] text-[var(--background)]" : "text-[var(--soft-text)]"
                 }`}
                 onClick={() => setTheme("light")}
@@ -64,7 +64,7 @@ export function SiteHeader() {
                 type="button"
                 aria-label={copy.themeDark}
                 title={copy.themeDark}
-                className={`rounded-full p-2.5 ${
+                  className={`rounded-full p-2 ${
                   theme === "dark" ? "bg-[var(--foreground)] text-[var(--background)]" : "text-[var(--soft-text)]"
                 }`}
                 onClick={() => setTheme("dark")}
@@ -76,7 +76,7 @@ export function SiteHeader() {
             <div className="flex items-center rounded-full border border-[var(--line)] bg-[var(--nav-surface)] p-1">
               <button
                 type="button"
-                className={`rounded-full px-3 py-2 text-xs ${
+                className={`rounded-full px-2.5 py-1.5 text-xs ${
                   locale === "en" ? "bg-[var(--foreground)] text-[var(--background)]" : "text-[var(--soft-text)]"
                 }`}
                 onClick={() => setLocale("en")}
@@ -85,7 +85,7 @@ export function SiteHeader() {
               </button>
               <button
                 type="button"
-                className={`rounded-full px-3 py-2 text-xs ${
+                className={`rounded-full px-2.5 py-1.5 text-xs ${
                   locale === "am" ? "bg-[var(--foreground)] text-[var(--background)]" : "text-[var(--soft-text)]"
                 }`}
                 onClick={() => setLocale("am")}
@@ -97,6 +97,18 @@ export function SiteHeader() {
             <a href={telegramOrderUrl} className="button-primary button-compact text-sm" target="_blank" rel="noreferrer">
               {copy.cta}
             </a>
+            <Link
+              href="/admin"
+              aria-label="Open admin dashboard"
+              title="Admin dashboard"
+              className={`inline-flex h-9 w-9 items-center justify-center rounded-full border border-[var(--line)] ${
+                isActive("/admin")
+                  ? "bg-[var(--foreground)] text-[var(--background)]"
+                  : "bg-[var(--nav-surface)] text-[var(--soft-text)] hover:text-[var(--foreground)]"
+              }`}
+            >
+              <AdminIcon className="h-4 w-4" />
+            </Link>
           </div>
 
           <button
@@ -125,6 +137,18 @@ export function SiteHeader() {
                 {navLabels[link.href] ?? link.label}
               </Link>
             ))}
+            <Link
+              href="/admin"
+              className={`flex items-center justify-center gap-2 rounded-full px-4 py-3 text-sm ${
+                isActive("/admin")
+                  ? "bg-[var(--foreground)] text-[var(--background)]"
+                  : "bg-[var(--chip-surface)] text-[var(--soft-text)]"
+              }`}
+              onClick={() => setMenuOpen(false)}
+            >
+              <AdminIcon className="h-4 w-4" />
+              Admin
+            </Link>
             <div className="mt-2 grid gap-2 rounded-[1.5rem] border border-[var(--line)] bg-[var(--nav-surface)] p-3">
               <div className="flex items-center rounded-full border border-[var(--line)] p-1">
                 <button

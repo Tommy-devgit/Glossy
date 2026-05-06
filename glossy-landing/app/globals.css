@@ -104,7 +104,7 @@ button {
 .section-wrap {
   margin-inline: auto;
   width: 100%;
-  max-width: 74rem;
+  max-width: 68rem;
   padding-inline: 1.25rem;
 }
 
@@ -129,14 +129,14 @@ button {
   border-radius: 999px;
   border: 1px solid var(--line);
   background: var(--accent);
-  padding: 0.76rem 1.35rem;
-  font-size: 0.92rem;
+  padding: 0.64rem 1.08rem;
+  font-size: 0.86rem;
   font-weight: 600;
   color: var(--background);
 }
 
 .button-compact {
-  padding: 0.6rem 1.05rem;
+  padding: 0.52rem 0.92rem;
 }
 
 .button-primary:hover {
@@ -151,7 +151,8 @@ button {
   border-radius: 999px;
   border: 1px solid var(--line);
   background: var(--chip-surface);
-  padding: 0.76rem 1.35rem;
+  padding: 0.64rem 1.08rem;
+  font-size: 0.86rem;
   color: var(--soft-text);
 }
 
@@ -177,16 +178,17 @@ button {
   border-radius: 999px;
   border: 1px solid var(--line);
   background: var(--chip-surface);
-  padding: 0.3rem 0.72rem;
-  font-size: 0.73rem;
+  padding: 0.26rem 0.62rem;
+  font-size: 0.7rem;
   color: var(--chip-text);
 }
 
 .input-field {
-  border-radius: 1.1rem;
+  border-radius: 0.9rem;
   border: 1px solid var(--line);
   background: var(--input-surface);
-  padding: 0.85rem 1rem;
+  padding: 0.72rem 0.9rem;
+  font-size: 0.92rem;
   color: var(--foreground);
   outline: none;
 }
