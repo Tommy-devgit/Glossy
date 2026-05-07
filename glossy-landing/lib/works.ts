@@ -24,7 +24,11 @@ type WorksResponse = {
   items: ApiArtwork[];
 };
 
-export const API_URL = process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:4000";
+const isProduction = process.env.NODE_ENV === "production";
+
+export const API_URL = isProduction
+  ? process.env.NEXT_PUBLIC_API_URL_PROD
+  : process.env.NEXT_PUBLIC_API_URL_LOCAL;
 
 const legacyCategoryMap: Record<string, ArtworkCategory> = {
   Traditional: "Portrait",
