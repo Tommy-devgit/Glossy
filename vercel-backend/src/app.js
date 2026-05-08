@@ -17,7 +17,10 @@ const upload = multer({
   },
 });
 
-const clientOrigin = process.env.CLIENT_ORIGIN ?? "http://localhost:3000";
+const clientOrigins = (process.env.CLIENT_ORIGIN ?? "http://localhost:3000")
+  .split(",")
+  .map((origin) => origin.trim())
+  .filter(Boolean);
 const databaseTimeoutMs = Number(process.env.MONGODB_TIMEOUT_MS ?? 8000);
 const workCategories = ["Religious", "Wedding", "Portrait", "Art"];
 const legacyCategoryMap = {
@@ -44,7 +47,7 @@ cloudinary.config({
 
 app.use(
   cors({
-    origin: clientOrigin,
+    origin: clientOrigins,
   }),
 );
 app.use(express.json());

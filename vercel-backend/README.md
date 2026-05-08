@@ -20,6 +20,7 @@ npm run dev
 ```
 
 Copy `.env.example` to `.env` locally, then fill in MongoDB, Cloudinary, `ADMIN_KEY`, and `CLIENT_ORIGIN`.
+`CLIENT_ORIGIN` can contain one origin or a comma-separated list of allowed origins.
 
 ## Vercel Deployment
 
