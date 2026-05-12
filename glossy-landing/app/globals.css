@@ -1,28 +1,28 @@
 @import "tailwindcss";
 
 :root {
-  --background: #f7efe4;
-  --background-strong: #efe3d4;
-  --surface: rgba(255, 252, 247, 0.78);
-  --surface-strong: #fffaf4;
-  --foreground: #24160f;
-  --muted: #6c5a51;
-  --soft-text: rgba(36, 22, 15, 0.72);
-  --soft-text-strong: rgba(36, 22, 15, 0.52);
-  --line: rgba(77, 55, 42, 0.14);
-  --accent: #24160f;
-  --accent-soft: #f0ded0;
-  --nav-surface: rgba(255, 255, 255, 0.55);
-  --card-surface: rgba(255, 251, 246, 0.74);
-  --chip-surface: rgba(255, 255, 255, 0.72);
-  --chip-text: rgba(36, 22, 15, 0.7);
-  --input-surface: rgba(255, 255, 255, 0.82);
-  --frame-surface: rgba(255, 255, 255, 0.82);
-  --grid-line: rgba(92, 66, 50, 0.045);
-  --body-start: #fbf5ec;
-  --body-middle: #f7efe4;
-  --body-end: #f2e5d8;
-  --shadow: 0 22px 60px rgba(77, 55, 42, 0.08);
+  --background: #f6f1ea;
+  --background-strong: #e9ded1;
+  --surface: #fffaf3;
+  --surface-strong: #ffffff;
+  --foreground: #231a15;
+  --muted: #66584f;
+  --soft-text: #4d423b;
+  --soft-text-strong: #75675e;
+  --line: #ded1c3;
+  --accent: #241a14;
+  --accent-soft: #efe4d8;
+  --nav-surface: #fffaf3;
+  --card-surface: #ffffff;
+  --chip-surface: #f0e6dc;
+  --chip-text: #564941;
+  --input-surface: #ffffff;
+  --frame-surface: #f7f0e8;
+  --grid-line: #eadfd4;
+  --body-start: #f6f1ea;
+  --body-middle: #f6f1ea;
+  --body-end: #f6f1ea;
+  --shadow: 0 14px 34px rgb(70 54 41 / 0.08);
 }
 
 html[data-theme="dark"],
@@ -30,27 +30,27 @@ body[data-theme="dark"],
 html.dark,
 body.dark {
   --background: #11100f;
-  --background-strong: #181615;
-  --surface: rgba(25, 22, 20, 0.86);
-  --surface-strong: #1b1816;
+  --background-strong: #1b1815;
+  --surface: #1b1816;
+  --surface-strong: #211d1a;
   --foreground: #f5ede2;
   --muted: #b7a99d;
-  --soft-text: rgba(245, 237, 226, 0.78);
-  --soft-text-strong: rgba(245, 237, 226, 0.56);
-  --line: rgba(245, 237, 226, 0.12);
+  --soft-text: #dacfc3;
+  --soft-text-strong: #a99b8f;
+  --line: #37312c;
   --accent: #f1e1d0;
-  --accent-soft: rgba(241, 225, 208, 0.14);
-  --nav-surface: rgba(27, 24, 22, 0.76);
-  --card-surface: rgba(31, 27, 25, 0.88);
-  --chip-surface: rgba(245, 237, 226, 0.08);
-  --chip-text: rgba(245, 237, 226, 0.78);
-  --input-surface: rgba(24, 21, 20, 0.92);
-  --frame-surface: rgba(26, 22, 21, 0.94);
-  --grid-line: rgba(245, 237, 226, 0.04);
+  --accent-soft: #2b2521;
+  --nav-surface: #1b1816;
+  --card-surface: #211d1a;
+  --chip-surface: #2a241f;
+  --chip-text: #d8cbbf;
+  --input-surface: #161412;
+  --frame-surface: #171412;
+  --grid-line: #27221e;
   --body-start: #141210;
   --body-middle: #0f0e0d;
   --body-end: #191614;
-  --shadow: 0 24px 64px rgba(0, 0, 0, 0.35);
+  --shadow: 0 18px 42px rgb(0 0 0 / 0.28);
 }
 
 @theme inline {
@@ -104,7 +104,7 @@ button {
 .section-wrap {
   margin-inline: auto;
   width: 100%;
-  max-width: 68rem;
+  max-width: 64rem;
   padding-inline: 1.25rem;
 }
 
@@ -141,7 +141,7 @@ button {
 
 .button-primary:hover {
   transform: translateY(-1px);
-  box-shadow: 0 14px 30px color-mix(in srgb, var(--accent) 24%, transparent);
+  box-shadow: 0 12px 24px rgb(36 26 20 / 0.18);
 }
 
 .button-secondary {
@@ -168,7 +168,7 @@ button {
 }
 
 .paper-card:hover {
-  transform: translateY(-3px);
+  transform: translateY(-2px);
 }
 
 .label-chip {
@@ -218,6 +218,46 @@ button {
   width: 100%;
   height: 100%;
   object-fit: cover;
+}
+
+.hero-depth-stage {
+  perspective: 1100px;
+}
+
+.hero-resin-frame {
+  position: relative;
+  isolation: isolate;
+  transform: rotateY(-8deg) rotateX(5deg);
+  transform-style: preserve-3d;
+  box-shadow: 0 28px 58px rgb(45 35 27 / 0.2);
+}
+
+.hero-resin-frame::before {
+  content: "";
+  position: absolute;
+  inset: 0.7rem;
+  z-index: 3;
+  border-radius: 1rem;
+  background:
+    linear-gradient(120deg, transparent 8%, rgb(255 255 255 / 0.56) 18%, transparent 34%),
+    linear-gradient(180deg, rgb(255 255 255 / 0.2), transparent 42%);
+  mix-blend-mode: screen;
+  pointer-events: none;
+}
+
+.hero-resin-frame::after {
+  content: "";
+  position: absolute;
+  inset: 1rem -1rem -1rem 1rem;
+  z-index: -1;
+  border-radius: 1.2rem;
+  background: var(--background-strong);
+  transform: translateZ(-34px);
+  border: 1px solid var(--line);
+}
+
+.hero-resin-frame:hover {
+  transform: rotateY(-3deg) rotateX(2deg) translateY(-3px);
 }
 
 @media (min-width: 768px) {

@@ -3,6 +3,7 @@ import { SitePreferencesProvider } from "@/components/site-preferences-provider"
 import { Manrope, Parisienne, Sora } from "next/font/google";
 import { SiteFooter } from "@/components/site-footer";
 import { SiteHeader } from "@/components/site-header";
+import { ToastProvider } from "@/components/toast-provider";
 import "./globals.css";
 
 const sora = Sora({
@@ -29,7 +30,7 @@ export const metadata: Metadata = {
     default: "glossy | Handcrafted Gloss-Finished Photo Art",
     template: "%s | glossy",
   },
-  description: "glossy transforms treasured photographs into handcrafted artworks with a luminous, glass-like finish.",
+  description: "glossy transforms treasured photographs into handcrafted artworks with depth, clarity, and a luminous finish.",
   keywords: ["photo art", "luxury photo artwork", "epoxy photo art", "gloss-finished artwork", "custom portrait art"],
   openGraph: {
     title: "glossy",
@@ -48,11 +49,13 @@ export default function RootLayout({
     <html lang="en" className={`${sora.variable} ${manrope.variable} ${parisienne.variable} h-full antialiased`}>
       <body className="min-h-full overflow-x-hidden text-[var(--foreground)]">
         <SitePreferencesProvider>
-          <div className="relative z-10 flex min-h-screen flex-col">
-            <SiteHeader />
-            <main className="flex-1">{children}</main>
-            <SiteFooter />
-          </div>
+          <ToastProvider>
+            <div className="relative z-10 flex min-h-screen flex-col">
+              <SiteHeader />
+              <main className="flex-1">{children}</main>
+              <SiteFooter />
+            </div>
+          </ToastProvider>
         </SitePreferencesProvider>
       </body>
     </html>

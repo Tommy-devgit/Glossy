@@ -2,16 +2,23 @@
 
 import { FormEvent, useState } from "react";
 import { useSitePreferences } from "@/components/site-preferences-provider";
+import { useToast } from "@/components/toast-provider";
 import { translations } from "@/lib/translations";
 
 export function ContactForm() {
   const [sent, setSent] = useState(false);
   const { locale } = useSitePreferences();
+  const { showToast } = useToast();
   const copy = translations[locale].contact;
 
   const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     setSent(true);
+    showToast({
+      type: "success",
+      title: copy.sent,
+      message: "We received your enquiry and will reply with next steps.",
+    });
   };
 
   return (
@@ -46,7 +53,7 @@ export function ContactForm() {
           {copy.submit}
         </button>
 
-        {sent ? <p className="mt-4 text-sm text-[var(--soft-text)]">{copy.sent}</p> : null}
+        {sent ? <p className="sr-only">{copy.sent}</p> : null}
       </form>
 
       <aside className="grid gap-5">

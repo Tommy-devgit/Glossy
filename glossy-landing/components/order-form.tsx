@@ -1,6 +1,7 @@
 "use client";
 
 import { FormEvent, useRef, useState } from "react";
+import { useToast } from "@/components/toast-provider";
 
 const sizeOptions = ["12 x 18 in", "18 x 24 in", "24 x 36 in", "30 x 40 in", "Custom size"];
 const styleOptions = ["Signature Gloss", "Diamond Edge", "Frosted Edge", "Triptych", "Floating Mount"];
@@ -10,6 +11,7 @@ export function OrderForm() {
   const [dragActive, setDragActive] = useState(false);
   const [files, setFiles] = useState<File[]>([]);
   const [submitted, setSubmitted] = useState(false);
+  const { showToast } = useToast();
 
   const addFiles = (nextFiles: FileList | null) => {
     if (!nextFiles) {
@@ -25,22 +27,27 @@ export function OrderForm() {
   const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     setSubmitted(true);
+    showToast({
+      type: "success",
+      title: "Request captured",
+      message: "Thank you. Our studio team will reply within 12 hours.",
+    });
   };
 
   return (
-    <form className="grid gap-8 lg:grid-cols-[1.15fr_.85fr]" onSubmit={handleSubmit}>
-      <div className="glass-panel space-y-5 rounded-3xl p-6 md:p-8">
+    <form className="grid gap-6 lg:grid-cols-[1.15fr_.85fr]" onSubmit={handleSubmit}>
+      <div className="paper-panel space-y-5 rounded-[1.25rem] p-5 md:p-6">
         <div>
-          <p className="text-xs uppercase tracking-[0.2em] text-cyan-200/70">Upload</p>
-          <h2 className="mt-2 text-3xl text-white">Share your photos</h2>
+          <p className="eyebrow">Upload</p>
+          <h2 className="mt-2 text-2xl md:text-3xl">Share your photos</h2>
         </div>
 
         <button
           type="button"
-          className={`relative w-full rounded-3xl border border-dashed p-8 text-left transition ${
+          className={`relative w-full rounded-[1.1rem] border border-dashed p-6 text-left transition ${
             dragActive
-              ? "border-cyan-300 bg-cyan-300/10"
-              : "border-white/25 bg-white/5 hover:border-white/45"
+              ? "border-[var(--foreground)] bg-[var(--accent-soft)]"
+              : "border-[var(--line)] bg-[var(--surface-strong)] hover:border-[var(--foreground)]"
           }`}
           onClick={() => inputRef.current?.click()}
           onDragEnter={(event) => {
@@ -61,9 +68,9 @@ export function OrderForm() {
             addFiles(event.dataTransfer.files);
           }}
         >
-          <p className="text-xl text-white">Drag and drop images here</p>
-          <p className="mt-3 text-sm text-white/65">JPG, PNG, HEIC up to 8 files</p>
-          <p className="mt-5 inline-flex rounded-full bg-white/10 px-4 py-2 text-xs uppercase tracking-[0.18em] text-cyan-100">
+          <p className="text-lg font-semibold text-[var(--foreground)]">Drag and drop images here</p>
+          <p className="mt-3 text-sm text-[var(--muted)]">JPG, PNG, HEIC up to 8 files</p>
+          <p className="mt-5 inline-flex rounded-full bg-[var(--chip-surface)] px-4 py-2 text-xs uppercase tracking-[0.18em] text-[var(--chip-text)]">
             Browse Files
           </p>
           <input
@@ -77,7 +84,7 @@ export function OrderForm() {
         </button>
 
         {files.length > 0 ? (
-          <div className="space-y-2 text-sm text-white/80">
+          <div className="space-y-2 text-sm text-[var(--soft-text)]">
             {files.map((file) => (
               <p key={`${file.name}-${file.lastModified}`}>- {file.name}</p>
             ))}
@@ -85,18 +92,18 @@ export function OrderForm() {
         ) : null}
       </div>
 
-      <div className="glass-panel rounded-3xl p-6 md:p-8">
-        <h3 className="text-2xl text-white">Order details</h3>
+      <div className="paper-panel rounded-[1.25rem] p-5 md:p-6">
+        <h3 className="text-2xl">Order details</h3>
         <div className="mt-5 grid gap-4">
-          <label className="grid gap-2 text-sm text-white/80">
+          <label className="grid gap-2 text-sm text-[var(--soft-text)]">
             Full name
             <input required name="name" className="input-field" placeholder="Your name" />
           </label>
-          <label className="grid gap-2 text-sm text-white/80">
+          <label className="grid gap-2 text-sm text-[var(--soft-text)]">
             Email
             <input required type="email" name="email" className="input-field" placeholder="you@email.com" />
           </label>
-          <label className="grid gap-2 text-sm text-white/80">
+          <label className="grid gap-2 text-sm text-[var(--soft-text)]">
             Size
             <select name="size" className="input-field" defaultValue={sizeOptions[1]}>
               {sizeOptions.map((option) => (
@@ -106,7 +113,7 @@ export function OrderForm() {
               ))}
             </select>
           </label>
-          <label className="grid gap-2 text-sm text-white/80">
+          <label className="grid gap-2 text-sm text-[var(--soft-text)]">
             Style
             <select name="style" className="input-field" defaultValue={styleOptions[0]}>
               {styleOptions.map((option) => (
@@ -116,7 +123,7 @@ export function OrderForm() {
               ))}
             </select>
           </label>
-          <label className="grid gap-2 text-sm text-white/80">
+          <label className="grid gap-2 text-sm text-[var(--soft-text)]">
             Notes
             <textarea
               name="notes"
@@ -131,11 +138,7 @@ export function OrderForm() {
           Submit Request
         </button>
 
-        {submitted ? (
-          <p className="mt-4 text-sm text-cyan-200">
-            Thank you. Your draft order has been captured. Our studio team will reply within 12 hours.
-          </p>
-        ) : null}
+        {submitted ? <p className="sr-only">Thank you. Your draft order has been captured.</p> : null}
       </div>
     </form>
   );

@@ -10,6 +10,53 @@ import { translations } from "@/lib/translations";
 import { fetchWorks, type Artwork } from "@/lib/works";
 
 const HOME_FETCH_LIMIT = 100;
+const heroStatFallbacks = [120, 70, 35] as const;
+
+function useCountUp(target: number) {
+  const [value, setValue] = useState(0);
+
+  useEffect(() => {
+    const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+    if (reduceMotion) {
+      const timer = window.setTimeout(() => setValue(target), 0);
+      return () => window.clearTimeout(timer);
+    }
+
+    let frame = 0;
+    const duration = 1200;
+    const start = performance.now();
+
+    function tick(now: number) {
+      const progress = Math.min((now - start) / duration, 1);
+      const eased = 1 - Math.pow(1 - progress, 3);
+      setValue(Math.round(target * eased));
+
+      if (progress < 1) {
+        frame = window.requestAnimationFrame(tick);
+      }
+    }
+
+    frame = window.requestAnimationFrame(tick);
+
+    return () => window.cancelAnimationFrame(frame);
+  }, [target]);
+
+  return value;
+}
+
+function HeroCounter({ label, value }: { label: string; value: number }) {
+  const count = useCountUp(value);
+
+  return (
+    <div className="rounded-[1rem] border border-[var(--line)] bg-[var(--surface-strong)] px-4 py-3">
+      <p className="font-display text-2xl font-semibold leading-none text-[var(--foreground)] md:text-3xl">
+        {count}+
+      </p>
+      <p className="mt-1 text-xs uppercase tracking-[0.14em] text-[var(--soft-text-strong)]">{label}</p>
+    </div>
+  );
+}
 
 function FeaturedImage({
   work,
@@ -143,64 +190,47 @@ export function HomePageContent() {
 
   return (
     <>
-      <section className="section-wrap pb-10 pt-8 md:pb-12 md:pt-10">
-        <div className="paper-panel overflow-hidden rounded-[1.5rem] px-4 py-4 md:px-6 md:py-6">
-          <div className="grid gap-6 lg:grid-cols-[1.05fr_.95fr]">
-            <Reveal className="relative min-h-[25rem] overflow-hidden rounded-[1.25rem] lg:min-h-[30rem]">
-              <FeaturedImage work={works[0]} alt={works[0]?.title ?? "Featured glossy artwork"} priority />
-              <div className="absolute inset-0 bg-black/42" />
-              <div className="relative z-10 flex h-full flex-col justify-between p-5 text-[#f9f2ea] md:p-8">
-                <div>
-                  <p className="text-xs uppercase tracking-[0.24em] text-[#efe2d6]/72">{copy.eyebrow}</p>
-                  <h1 className="mt-4 max-w-3xl text-3xl md:text-5xl">{copy.headline}</h1>
-                  <p className="mt-5 max-w-2xl text-sm leading-relaxed text-[#f4e7db]/84 md:text-base">
-                    {copy.subtext}
-                  </p>
-                </div>
+      <section className="section-wrap pb-9 pt-7 md:pb-11 md:pt-9">
+        <div className="paper-panel overflow-hidden rounded-[1.35rem] px-5 py-7 md:px-8 md:py-9">
+          <div className="grid gap-8 lg:grid-cols-[0.95fr_1.05fr] lg:items-center">
+            <Reveal>
+              <p className="eyebrow">{copy.eyebrow}</p>
+              <h1 className="mt-4 max-w-3xl text-4xl md:text-5xl lg:text-[3.65rem]">
+                Depth, Clarity, and Quiet Presence
+              </h1>
+              <p className="mt-5 max-w-2xl text-base leading-relaxed text-[var(--muted)] md:text-lg">
+                Each piece is made to give a personal photograph the presence of a polished, lasting work of art.
+              </p>
 
-                <div className="flex flex-wrap gap-3">
-                  <a href={telegramOrderUrl} className="button-primary" target="_blank" rel="noreferrer">
-                    {copy.primaryCta}
-                  </a>
-                  <Link
-                    href="/gallery"
-                    className="inline-flex items-center justify-center rounded-full border border-white/18 bg-white/10 px-5 py-3 text-sm text-[#f9f2ea] backdrop-blur"
-                  >
-                    {copy.secondaryCta}
-                  </Link>
-                </div>
+              <div className="mt-7 flex flex-wrap gap-3">
+                <a href={telegramOrderUrl} className="button-primary" target="_blank" rel="noreferrer">
+                  {copy.primaryCta}
+                </a>
+                <Link href="/gallery" className="button-secondary">
+                  {copy.secondaryCta}
+                </Link>
+              </div>
+
+              <div className="mt-7 grid gap-3 sm:grid-cols-3">
+                {[
+                  Math.max(portraitWorks.length, heroStatFallbacks[0]),
+                  Math.max(milestoneWorks.length, heroStatFallbacks[1]),
+                  Math.max(commissionWorks.length, heroStatFallbacks[2]),
+                ].map((value, index) => (
+                  <HeroCounter key={copy.trustBadges[index]} label={copy.trustBadges[index]} value={value} />
+                ))}
               </div>
             </Reveal>
 
-            <div className="grid gap-6">
-              <Reveal delay={0.08} className="paper-card rounded-[1.25rem] p-5 md:p-6">
-                <span className="label-chip">{copy.heroBadge}</span>
-                <h2 className="mt-4 text-2xl">{copy.heroCardTitle}</h2>
-                <p className="mt-4 text-sm leading-relaxed text-[var(--muted)] md:text-base">
-                  {copy.heroCardText}
-                </p>
-                <div className="mt-8 grid gap-3">
-                  {copy.trustBadges.map((label) => (
-                    <div
-                      key={label}
-                      className="flex items-center justify-between rounded-[1.25rem] border border-[var(--line)] bg-[var(--chip-surface)] px-4 py-3 text-sm text-[var(--soft-text)]"
-                    >
-                      <span>{label}</span>
-                      <span className="text-[var(--soft-text-strong)]">01</span>
-                    </div>
-                  ))}
+            <Reveal delay={0.08} className="hero-depth-stage min-h-[20rem] sm:min-h-[25rem]">
+              <div className="hero-resin-frame art-frame relative mx-auto h-[20rem] w-full max-w-[28rem] overflow-hidden rounded-[1.35rem] p-3 sm:h-[25rem]">
+                <FeaturedImage work={works[0]} alt={works[0]?.title ?? "Featured glossy artwork"} priority />
+                <div className="absolute inset-x-5 bottom-5 z-10 rounded-[1rem] bg-[var(--surface-strong)] px-4 py-3 shadow-[0_12px_28px_rgb(35_25_18_/_0.16)]">
+                  <p className="text-xs uppercase tracking-[0.18em] text-[var(--soft-text-strong)]">{copy.heroBadge}</p>
+                  <p className="mt-1 text-sm font-semibold text-[var(--foreground)]">{copy.heroCardTitle}</p>
                 </div>
-              </Reveal>
-
-              <Reveal delay={0.16} className="relative min-h-[16rem] overflow-hidden rounded-[1.25rem]">
-                <FeaturedImage work={works[1] ?? works[0]} alt={works[1]?.title ?? works[0]?.title ?? "Glossy artwork"} />
-                <div className="absolute inset-0 bg-black/35" />
-                <div className="absolute inset-x-0 bottom-0 p-6 text-[#f9f2ea]">
-                  <p className="text-xs uppercase tracking-[0.22em] text-[#efe2d6]/72">{copy.galleryEyebrow}</p>
-                  <p className="mt-3 max-w-md text-sm leading-relaxed text-[#f6ecdf]/84">{copy.galleryText}</p>
-                </div>
-              </Reveal>
-            </div>
+              </div>
+            </Reveal>
           </div>
         </div>
       </section>

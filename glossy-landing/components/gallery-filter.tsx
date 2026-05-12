@@ -4,6 +4,7 @@ import { AnimatePresence, motion } from "framer-motion";
 import Image from "next/image";
 import { useEffect, useMemo, useState } from "react";
 import { useSitePreferences } from "@/components/site-preferences-provider";
+import { useToast } from "@/components/toast-provider";
 import { telegramOrderUrl } from "@/lib/site-data";
 import { translations } from "@/lib/translations";
 import { fetchWorks, galleryCategories, type Artwork } from "@/lib/works";
@@ -19,6 +20,7 @@ export function GalleryFilter() {
   const [isLoading, setIsLoading] = useState(false);
   const [loadError, setLoadError] = useState("");
   const { locale } = useSitePreferences();
+  const { showToast } = useToast();
   const copy = translations[locale].gallery;
 
   useEffect(() => {
@@ -38,8 +40,10 @@ export function GalleryFilter() {
         setGalleryItems(works);
       } catch (error) {
         if (!ignore) {
+          const nextMessage = error instanceof Error ? error.message : "Unable to load works";
           setGalleryItems([]);
-          setLoadError(error instanceof Error ? error.message : "Unable to load works");
+          setLoadError(nextMessage);
+          showToast({ type: "error", title: "Gallery could not load", message: nextMessage });
         }
       } finally {
         if (!ignore) {
@@ -53,7 +57,7 @@ export function GalleryFilter() {
     return () => {
       ignore = true;
     };
-  }, []);
+  }, [showToast]);
 
   const filteredItems = useMemo(
     () =>
@@ -175,7 +179,7 @@ export function GalleryFilter() {
       ) : null}
 
       {isLoading ? <p className="text-center text-sm text-[var(--muted)]">Loading gallery updates...</p> : null}
-      {!isLoading && loadError ? <p className="text-center text-sm text-red-600">{loadError}</p> : null}
+      {!isLoading && loadError ? <p className="sr-only">{loadError}</p> : null}
       {!isLoading && !loadError && filteredItems.length === 0 ? (
         <p className="text-center text-sm text-[var(--muted)]">No gallery items yet.</p>
       ) : null}

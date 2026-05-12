@@ -1,6 +1,7 @@
 "use client";
 
 import { ChangeEvent, FormEvent, useEffect, useRef, useState } from "react";
+import { useToast } from "@/components/toast-provider";
 import { API_URL, artworkCategories, normalizeArtworkCategory, type Artwork, type ArtworkCategory } from "@/lib/works";
 
 type SaveState = "idle" | "saving" | "saved" | "error";
@@ -94,6 +95,7 @@ export function AdminDashboard() {
   const [isLoadingWorks, setIsLoadingWorks] = useState(false);
   const previewUrlRef = useRef<string | null>(null);
   const fileInputRef = useRef<HTMLInputElement | null>(null);
+  const { showToast } = useToast();
 
   const selectedWork = works.find((work) => work.id === selectedId);
   const isEditing = Boolean(selectedWork);
@@ -136,8 +138,10 @@ export function AdminDashboard() {
       const data = (await response.json()) as { items: ApiArtwork[] };
       setWorks(data.items.map(mapApiArtwork));
     } catch (error) {
-      setMessage(error instanceof Error ? error.message : "Unable to load works");
+      const nextMessage = error instanceof Error ? error.message : "Unable to load works";
+      setMessage(nextMessage);
       setStatus("error");
+      showToast({ type: "error", title: "Unable to load works", message: nextMessage });
     } finally {
       setIsLoadingWorks(false);
     }
@@ -184,6 +188,7 @@ export function AdminDashboard() {
     if (!password) {
       setGateState("error");
       setGateMessage("Enter the admin password.");
+      showToast({ type: "warning", title: "Password required", message: "Enter the admin password to continue." });
       return;
     }
 
@@ -207,11 +212,14 @@ export function AdminDashboard() {
       setPassword("");
       setGateState("unlocked");
       setGateMessage("");
+      showToast({ type: "success", title: "Dashboard unlocked", message: "Gallery management is ready." });
       await loadWorks();
     } catch (error) {
+      const nextMessage = error instanceof Error ? error.message : "Invalid password";
       setAdminKey("");
       setGateState("error");
-      setGateMessage(error instanceof Error ? error.message : "Invalid password");
+      setGateMessage(nextMessage);
+      showToast({ type: "error", title: "Access denied", message: nextMessage });
     }
   }
 
@@ -219,8 +227,10 @@ export function AdminDashboard() {
     event.preventDefault();
 
     if (!adminKey || !title || (!isEditing && !photo)) {
+      const nextMessage = isEditing ? "Add a title before saving." : "Add a title and a photo before uploading.";
       setStatus("error");
-      setMessage(isEditing ? "Add a title before saving." : "Add a title and a photo before uploading.");
+      setMessage(nextMessage);
+      showToast({ type: "warning", title: "Missing details", message: nextMessage });
       return;
     }
 
@@ -264,13 +274,20 @@ export function AdminDashboard() {
       setLocalPreview(null, savedWork.image);
       setStatus("saved");
       setMessage(isEditing ? "Updated. The gallery will use the new details." : "Saved. It will appear in the gallery and home page.");
+      showToast({
+        type: "success",
+        title: isEditing ? "Piece updated" : "Piece uploaded",
+        message: isEditing ? "The gallery will use the new details." : "It will appear in the gallery and home page.",
+      });
 
       if (fileInputRef.current) {
         fileInputRef.current.value = "";
       }
     } catch (error) {
+      const nextMessage = error instanceof Error ? error.message : "Save failed";
       setStatus("error");
-      setMessage(error instanceof Error ? error.message : "Save failed");
+      setMessage(nextMessage);
+      showToast({ type: "error", title: "Save failed", message: nextMessage });
     }
   }
 
@@ -305,9 +322,12 @@ export function AdminDashboard() {
       resetForm();
       setStatus("saved");
       setMessage("Deleted from the gallery.");
+      showToast({ type: "success", title: "Piece deleted", message: "The item was removed from the gallery." });
     } catch (error) {
+      const nextMessage = error instanceof Error ? error.message : "Delete failed";
       setStatus("error");
-      setMessage(error instanceof Error ? error.message : "Delete failed");
+      setMessage(nextMessage);
+      showToast({ type: "error", title: "Delete failed", message: nextMessage });
     }
   }
 
@@ -322,7 +342,7 @@ export function AdminDashboard() {
       </div>
 
       {gateState !== "unlocked" ? (
-        <div className="fixed inset-0 z-[80] flex items-center justify-center bg-black/45 px-4 backdrop-blur-sm">
+        <div className="fixed inset-0 z-[80] flex items-center justify-center bg-black/45 px-4">
           <form className="paper-panel w-full max-w-sm rounded-[1.25rem] p-5 shadow-2xl" onSubmit={handleUnlock}>
             <p className="eyebrow">Private access</p>
             <h2 className="mt-3 text-2xl">Admin password</h2>
@@ -342,9 +362,7 @@ export function AdminDashboard() {
             <button type="submit" className="button-primary mt-5 w-full" disabled={gateState === "checking"}>
               {gateState === "checking" ? "Checking..." : "Unlock dashboard"}
             </button>
-            {gateMessage ? (
-              <p className={`mt-4 text-sm ${gateState === "error" ? "text-red-600" : "text-[var(--muted)]"}`}>{gateMessage}</p>
-            ) : null}
+            {gateMessage ? <p className="sr-only">{gateMessage}</p> : null}
           </form>
         </div>
       ) : null}
@@ -433,7 +451,7 @@ export function AdminDashboard() {
                 ) : null}
               </div>
 
-              {message ? <p className={`text-sm ${status === "error" ? "text-red-600" : "text-[var(--muted)]"}`}>{message}</p> : null}
+              {message ? <p className="sr-only">{message}</p> : null}
             </div>
           </form>
 
